@@ -8,7 +8,7 @@ use axum::{
 
 use tower_http::services::ServeDir;
 use pastemd::{database::Database, model::Paste};
-use pulldown_cmark::{Parser, Options};
+use sauropod::markdown::parse_markdown as shared_parse_markdown;
 
 pub fn routes(database: Database) -> Router {
     Router::new()
@@ -49,23 +49,8 @@ pub async fn view_paste_request(
 ) -> impl IntoResponse {
     match database.get_paste_by_url(url).await {
         Ok(p) => {
-            let mut options = Options::empty();
-            options.insert(Options::ENABLE_STRIKETHROUGH);
-            let parser = Parser::new_ext(&p.content, options);
-
-            // render
-            let mut html = String::new();
-            pulldown_cmark::html::push_html(&mut html, parser);
-
-            // return
-            Html(
-                PasteViewTemplate {
-                    paste: p,
-                    rendered: html,
-                }
-                .render()
-                .unwrap(),
-            )
+            let rendered = shared_parse_markdown(p.content.clone(), Vec::new());
+            Html(PasteViewTemplate { paste: p, rendered }.render().unwrap())
         }
         Err(e) => Html(
             ErrorViewTemplate {
@@ -108,13 +93,5 @@ pub struct RenderMarkdown {
 
 /// Render markdown body
 async fn render_markdown(Json(req): Json<RenderMarkdown>) -> Result<String, ()> {
-    let mut options = Options::empty();
-    options.insert(Options::ENABLE_STRIKETHROUGH);
-    let parser = Parser::new_ext(&req.content, options);
-
-    // render
-    let mut html = String::new();
-    pulldown_cmark::html::push_html(&mut html, parser);
-
-    Ok(html)
+    Ok(shared_parse_markdown(req.content.clone(), Vec::new()))
 }

@@ -23,5 +23,5 @@ dorsal = "0.1.3-1"
 dotenv = "0.15.0"
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
-pulldown-cmark = "0.11.0"
 pastemd = "0.1.1"
+sauropod = "0.1.1"
