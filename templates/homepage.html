@@ -1,0 +1,83 @@
+{% extends "./base.html" %} {% block title %}Create a new paste • Sealable{%
+endblock %} {% block content %}
+<div class="flex flex-col w-full h-full">
+    <!-- toolbar -->
+    <div class="flex">
+        <button class="button tab" id="text_button">Text</button>
+        <button class="button tab secondary" id="preview_button">
+            Preview
+        </button>
+    </div>
+
+    <!-- editor -->
+    <form class="flex flex-col w-full" id="submit_form">
+        <div class="card">
+            <div id="text_tab">
+                <textarea
+                    id="content"
+                    name="content"
+                    class="w-full"
+                    placeholder="Content"
+                    rows="10"
+                ></textarea>
+            </div>
+
+            <div id="preview_tab" style="display: none"></div>
+        </div>
+
+        <!-- actions -->
+        <fieldset class="w-full my-2">
+            <!-- inputs -->
+            <div class="gap-2 flex items-center float-right mb-2">
+                <input
+                    name="url"
+                    id="url"
+                    placeholder="Custom URL"
+                    required
+                    class="small"
+                />
+
+                <input
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    required
+                    class="small"
+                />
+            </div>
+
+            <!-- submit -->
+            <button class="round mb-2">Publish</button>
+        </fieldset>
+    </form>
+</div>
+
+<script>
+    document
+        .getElementById("submit_form")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const res = await (
+                await fetch("/api/new", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        url: e.target.url.value,
+                        password: e.target.password.value,
+                        content: e.target.content.value,
+                    }),
+                })
+            ).json();
+
+            if (res.success === false) {
+                // TODO: do something better with the error
+                alert(res.message);
+            } else {
+                window.location.href = `/${res.payload[1].url}?SECRET=${res.payload[0]}`;
+            }
+        });
+</script>
+{% call super() %} {% endblock %}

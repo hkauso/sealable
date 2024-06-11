@@ -1,0 +1,93 @@
+{% extends "./base.html" %} {% block title %}Editing "{{ paste.url }}" •
+Sealable{% endblock %} {% block content %}
+<div class="flex flex-col w-full h-full">
+    <!-- toolbar -->
+    <div class="flex">
+        <button class="button tab" id="text_button">Text</button>
+        <button class="button tab secondary" id="preview_button">
+            Preview
+        </button>
+    </div>
+
+    <!-- editor -->
+    <form class="flex flex-col w-full" id="submit_form">
+        <div class="card">
+            <div id="text_tab">
+                <textarea
+                    id="content"
+                    name="content"
+                    class="w-full"
+                    placeholder="Content"
+                    rows="10"
+                >
+{{ paste.content }}</textarea
+                >
+            </div>
+
+            <div id="preview_tab" style="display: none"></div>
+        </div>
+
+        <!-- actions -->
+        <fieldset class="w-full my-2">
+            <!-- inputs -->
+            <div class="gap-2 flex items-center float-right mb-2">
+                <input
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    required
+                    class="small"
+                />
+
+                <input
+                    name="new_url"
+                    id="new_url"
+                    placeholder="New Custom URL"
+                    class="small"
+                />
+
+                <input
+                    name="new_password"
+                    id="new_password"
+                    placeholder="New Password"
+                    class="small"
+                />
+            </div>
+
+            <!-- submit -->
+            <button class="round mb-2">Save</button>
+        </fieldset>
+    </form>
+</div>
+
+<script>
+    document
+        .getElementById("submit_form")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const res = await (
+                await fetch("/api/{{ paste.url }}/edit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        new_url: (e.target.new_url || { value: "" }).value,
+                        new_content: e.target.content.value,
+                        new_password: (e.target.new_password || { value: "" })
+                            .value,
+                        password: e.target.password.value,
+                    }),
+                })
+            ).json();
+
+            if (res.success === false) {
+                // TODO: do something better with the error
+                alert(res.message);
+            } else {
+                window.location.href = "/{{ paste.url }}";
+            }
+        });
+</script>
+{% call super() %} {% endblock %}

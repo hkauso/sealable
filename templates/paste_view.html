@@ -1,0 +1,26 @@
+{% extends "./base.html" %} {% block title %}{{ paste.url }}{% endblock %} {%
+block content %}
+<div class="flex flex-col w-full h-full">
+    <div class="card round">{{ rendered|safe }}</div>
+
+    <div class="flex w-full g-2 justify-between items-center">
+        <a href="/{{ paste.url }}/edit" class="button round">Edit</a>
+
+        <div class="flex flex-col g-1 opacity-75">
+            <span>
+                Pub:
+                <span class="date-time-to-localize">
+                    {{ paste.date_published }}
+                </span>
+            </span>
+
+            <span>
+                Edit:
+                <span class="date-time-to-localize">
+                    {{ paste.date_edited }}
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+{% call super() %} {% endblock %}

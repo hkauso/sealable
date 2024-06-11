@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply text-gray-950 dark:text-slate-200;
+}
+
+body {
+    @apply bg-zinc-200 dark:bg-zinc-900;
+}
+
+main {
+    @apply w-full md:w-[80ch] m-auto py-2;
+}
+
+hr {
+    @apply border-zinc-400/50 dark:border-zinc-700/50;
+}
+
+/* card */
+.card {
+    @apply bg-zinc-300 dark:bg-zinc-800;
+    @apply p-2;
+}
+
+.card.round {
+    @apply rounded-sm;
+}
+
+/* button */
+button,
+a.button {
+    @apply bg-zinc-300 dark:bg-zinc-800 hover:bg-zinc-400/50 hover:dark:bg-zinc-700/50; /* bg */
+    @apply flex gap-2 items-center justify-center; /* flex */
+    @apply transition-all px-3 py-1 text-black dark:text-white w-max; /* misc */
+    user-select: none;
+    text-decoration: none !important;
+}
+
+button.round,
+a.button.round {
+    @apply rounded-sm;
+}
+
+button.secondary,
+a.button.secondary {
+    @apply bg-zinc-200 dark:bg-zinc-900 hover:bg-zinc-300 hover:dark:bg-zinc-800;
+}
+
+button.tab,
+a.button.tab {
+    @apply rounded-t;
+}
+
+/* typography */
+a {
+    @apply text-blue-800 dark:text-blue-300 hover:underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    font-weight: 700;
+    width: max-content;
+    position: relative;
+}
+
+h1.no-margin,
+h2.no-margin,
+h3.no-margin,
+h4.no-margin,
+h5.no-margin,
+h6.no-margin {
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 2.5rem;
+    margin-top: 3.5rem;
+    font-size: 2.5rem;
+    text-align: center;
+    width: 100%;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+ul > li,
+ol > li {
+    margin-top: 0.25rem;
+}
+
+p:not(.mdnote p):not(.builder\:text),
+pre,
+table,
+ul,
+ol {
+    margin-bottom: 1rem;
+}
+
+ol,
+ul,
+menu {
+    list-style: inside;
+    margin: 0 0 1rem 0;
+    padding: 0 0 0 40px;
+}
+
+/* input */
+textarea {
+    @apply bg-transparent p-2 rounded-sm;
+}
+
+input {
+    @apply bg-zinc-300 dark:bg-zinc-800 focus:bg-zinc-400/50 focus:dark:bg-zinc-700/50;
+    @apply p-2 rounded-sm;
+}
+
+textarea,
+input {
+    @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 h-max w-full;
+}
+
+input.small {
+    @apply h-[32px];
+}
