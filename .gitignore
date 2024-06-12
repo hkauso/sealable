@@ -1,3 +1,4 @@
 /target
 *.db
 static/style.css
+static/favicon.svg
