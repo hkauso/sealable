@@ -1,5 +1,6 @@
-{% extends "./base.html" %} {% block title %}Create a new paste • Sealable{%
-endblock %} {% block content %}
+{% extends "./base.html" %} {% block title %}Sealable – Markdown Pastebin{%
+endblock %}{% block mainstuff %}style="height: 100%; display: flex;
+flex-direction: column;"{% endblock %}{% block content %}
 <div class="flex flex-col w-full h-full">
     <!-- toolbar -->
     <div class="flex">
@@ -10,18 +11,12 @@ endblock %} {% block content %}
     </div>
 
     <!-- editor -->
-    <form class="flex flex-col w-full" id="submit_form">
-        <div class="card">
-            <div id="text_tab">
-                <textarea
-                    id="content"
-                    name="content"
-                    class="w-full"
-                    placeholder="Content"
-                    rows="10"
-                ></textarea>
-            </div>
-
+    <form class="flex flex-col w-full" id="submit_form" style="flex: 1 0">
+        <div
+            class="card more_padding max-h-[37rem] md:max-h-[47rem] overflow-auto"
+            style="flex: 1 0"
+        >
+            <div id="text_tab" class="h-full"></div>
             <div id="preview_tab" style="display: none"></div>
         </div>
 
@@ -65,7 +60,7 @@ endblock %} {% block content %}
                     body: JSON.stringify({
                         url: e.target.url.value,
                         password: e.target.password.value,
-                        content: e.target.content.value,
+                        content: globalThis.editor.getValue(),
                     }),
                 })
             ).json();
@@ -77,5 +72,23 @@ endblock %} {% block content %}
                 window.location.href = `/${res.payload[1].url}?SECRET=${res.payload[0]}`;
             }
         });
+</script>
+
+<!-- editor -->
+<script src="https://unpkg.com/codemirror@5.39.2/lib/codemirror.js"></script>
+<script src="https://unpkg.com/codemirror@5.39.2/mode/markdown/markdown.js"></script>
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/codemirror@5.39.2/lib/codemirror.css"
+/>
+
+<script>
+    globalThis.editor = CodeMirror(document.getElementById("text_tab"), {
+        value: "",
+        mode: "markdown",
+        placeholder: "Content",
+        lineWrapping: true,
+    });
 </script>
 {% call super() %} {% endblock %}

@@ -1,5 +1,6 @@
-{% extends "./base.html" %} {% block title %}Editing "{{ paste.url }}" •
-Sealable{% endblock %} {% block content %}
+{% extends "./base.html" %} {% block title %}Editing "{{ paste.url }}" –
+Sealable{% endblock %} {% block mainstuff %}style="height: 100%; display: flex;
+flex-direction: column;"{% endblock %} {% block content %}
 <div class="flex flex-col w-full h-full">
     <!-- toolbar -->
     <div class="flex">
@@ -10,27 +11,16 @@ Sealable{% endblock %} {% block content %}
     </div>
 
     <!-- editor -->
-    <form class="flex flex-col w-full" id="submit_form">
-        <div class="card">
-            <div id="text_tab">
-                <textarea
-                    id="content"
-                    name="content"
-                    class="w-full"
-                    placeholder="Content"
-                    rows="10"
-                >
-{{ paste.content }}</textarea
-                >
-            </div>
-
+    <form class="flex flex-col w-full" id="submit_form" style="flex: 1 0">
+        <div class="card" style="flex: 1 0">
+            <div id="text_tab" class="h-full"></div>
             <div id="preview_tab" style="display: none"></div>
         </div>
 
         <!-- actions -->
-        <fieldset class="w-full my-2">
+        <fieldset class="w-full my-2 flex flex-col gap-2">
             <!-- inputs -->
-            <div class="gap-2 flex items-center float-right mb-2">
+            <div class="gap-2 flex items-center float-right">
                 <input
                     name="password"
                     id="password"
@@ -55,7 +45,28 @@ Sealable{% endblock %} {% block content %}
             </div>
 
             <!-- submit -->
-            <button class="round mb-2">Save</button>
+            <div class="flex justify-between align-center gap-2">
+                <div class="flex gap-2">
+                    <button
+                        class="round mb-2 text-emerald-800 dark:text-emerald-300"
+                    >
+                        Save
+                    </button>
+
+                    <a class="button round mb-2" href="/{{ paste.url }}">
+                        Cancel
+                    </a>
+                </div>
+
+                <button
+                    class="round mb-2 text-red-800 dark:text-red-300"
+                    id="delete_paste"
+                    data-endpoint="/api/{{ paste.url }}/delete"
+                    type="button"
+                >
+                    Delete
+                </button>
+            </div>
         </fieldset>
     </form>
 </div>
@@ -74,7 +85,7 @@ Sealable{% endblock %} {% block content %}
                     },
                     body: JSON.stringify({
                         new_url: (e.target.new_url || { value: "" }).value,
-                        new_content: e.target.content.value,
+                        new_content: globalThis.editor.getValue(),
                         new_password: (e.target.new_password || { value: "" })
                             .value,
                         password: e.target.password.value,
@@ -86,8 +97,70 @@ Sealable{% endblock %} {% block content %}
                 // TODO: do something better with the error
                 alert(res.message);
             } else {
-                window.location.href = "/{{ paste.url }}";
+                let url =
+                    (e.target.new_url || { value: "" }).value ||
+                    "{{ paste.url }}";
+
+                window.location.href = `/${url}`;
             }
         });
+
+    document
+        .getElementById("delete_paste")
+        .addEventListener("click", async () => {
+            if (
+                !confirm(
+                    "Are you sure you would like to do this? It cannot be undone.",
+                )
+            ) {
+                return;
+            }
+
+            const password = prompt("Enter this paste's edit password:");
+
+            if (!password) {
+                return;
+            }
+
+            const res = await (
+                await fetch("/api/{{ paste.url }}/delete", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        password: password.trim(),
+                    }),
+                })
+            ).json();
+
+            if (res.success === false) {
+                // TODO: do something better with the error
+                alert(res.message);
+            } else {
+                window.location.href = "/";
+            }
+        });
+</script>
+
+<!-- editor -->
+<script src="https://unpkg.com/codemirror@5.39.2/lib/codemirror.js"></script>
+<script src="https://unpkg.com/codemirror@5.39.2/mode/markdown/markdown.js"></script>
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/codemirror@5.39.2/lib/codemirror.css"
+/>
+
+<!-- prettier-ignore -->
+<script type="text/markdown" id="content">{{ paste.content|safe }}</script>
+
+<script>
+    globalThis.editor = CodeMirror(document.getElementById("text_tab"), {
+        value: document.getElementById("content").innerText,
+        mode: "markdown",
+        placeholder: "Content",
+        lineWrapping: true,
+    });
 </script>
 {% call super() %} {% endblock %}

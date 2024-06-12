@@ -26,35 +26,26 @@
     <body>
         <!-- page content -->
         <div id="_page" style="display: contents">
-            <main class="flex flex-col justify-between gap-8">
-                <div id="_footer_base_page">
+            <main class="min-h-full" {% block mainstuff %}{% endblock %}>
+                <div id="_footer_base_page" class="h-full">
                     {% block content %}{% endblock %}
                 </div>
 
                 <!-- footer -->
-                <footer class="flex justify-center items-center gap-4 w-full">
-                    <hr class="small" />
+                <footer class="flex flex-col items-center gap-2 w-full my-2">
+                    <hr class="md:w-[350px] w-full" />
 
-                    <div class="flex items-center gap-1">
-                        <!-- site menu -->
-                        <a
-                            title="Site Menu"
-                            href="/"
-                            class="button round secondary"
-                        >
-                            Sealable
-                        </a>
+                    <div class="footernav">
+                        <span class="item">
+                            <a href="/">new</a>
+                        </span>
+
+                        <span class="item">
+                            <a href="https://github.com/hkauso/sealable">
+                                source
+                            </a>
+                        </span>
                     </div>
-
-                    <hr class="small" />
-
-                    <style>
-                        footer hr.small {
-                            /* width: calc(425px / 2); */
-                            width: 100%;
-                            max-width: 100%;
-                        }
-                    </style>
 
                     <script type="module">
                         import "/static/js/footer.js";

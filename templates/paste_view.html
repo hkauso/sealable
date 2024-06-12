@@ -1,9 +1,9 @@
 {% extends "./base.html" %} {% block title %}{{ paste.url }}{% endblock %} {%
 block content %}
-<div class="flex flex-col w-full h-full">
-    <div class="card round">{{ rendered|safe }}</div>
+<div class="flex flex-col w-full h-full gap-2">
+    <div class="card more_padding round min-h-[15rem]">{{ rendered|safe }}</div>
 
-    <div class="flex w-full g-2 justify-between items-center">
+    <div class="flex w-full gap-2 justify-between">
         <a href="/{{ paste.url }}/edit" class="button round">Edit</a>
 
         <div class="flex flex-col g-1 opacity-75">

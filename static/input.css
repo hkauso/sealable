@@ -7,11 +7,11 @@
 }
 
 body {
-    @apply bg-zinc-200 dark:bg-zinc-900;
+    @apply bg-zinc-300 dark:bg-zinc-900 h-screen;
 }
 
 main {
-    @apply w-full md:w-[80ch] m-auto py-2;
+    @apply w-full md:w-[1140px] max-w-full m-auto py-2 md:px-2;
 }
 
 hr {
@@ -20,7 +20,7 @@ hr {
 
 /* card */
 .card {
-    @apply bg-zinc-300 dark:bg-zinc-800;
+    @apply bg-zinc-200 dark:bg-zinc-800;
     @apply p-2;
 }
 
@@ -28,14 +28,19 @@ hr {
     @apply rounded-sm;
 }
 
+.card.more_padding {
+    @apply p-4;
+}
+
 /* button */
 button,
 a.button {
-    @apply bg-zinc-300 dark:bg-zinc-800 hover:bg-zinc-400/50 hover:dark:bg-zinc-700/50; /* bg */
+    @apply bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-100 hover:dark:bg-zinc-700/50; /* bg */
     @apply flex gap-2 items-center justify-center; /* flex */
-    @apply transition-all px-3 py-1 text-black dark:text-white w-max; /* misc */
+    @apply transition-all px-3 py-1 text-gray-950 dark:text-slate-200 w-max; /* misc */
     user-select: none;
     text-decoration: none !important;
+    height: max-content;
 }
 
 button.round,
@@ -45,7 +50,7 @@ a.button.round {
 
 button.secondary,
 a.button.secondary {
-    @apply bg-zinc-200 dark:bg-zinc-900 hover:bg-zinc-300 hover:dark:bg-zinc-800;
+    @apply bg-zinc-300 dark:bg-zinc-900 hover:bg-zinc-200 hover:dark:bg-zinc-800;
 }
 
 button.tab,
@@ -131,12 +136,12 @@ menu {
 
 /* input */
 textarea {
-    @apply bg-transparent p-2 rounded-sm;
+    @apply bg-transparent p-2 rounded-sm min-h-full resize-none;
 }
 
 input {
-    @apply bg-zinc-300 dark:bg-zinc-800 focus:bg-zinc-400/50 focus:dark:bg-zinc-700/50;
-    @apply p-2 rounded-sm;
+    @apply bg-zinc-200 dark:bg-zinc-800 focus:bg-zinc-200 focus:dark:bg-zinc-700/50;
+    @apply px-3 py-1 rounded-sm;
 }
 
 textarea,
@@ -146,4 +151,145 @@ input {
 
 input.small {
     @apply h-[32px];
+}
+
+/* ... */
+[role="custom-color"] * {
+    color: inherit !important;
+}
+
+[role="spoiler"] {
+    --hidden-color: var(--background-surface2);
+    --active-color: var(--background-surface2a);
+    padding: 0 var(--u-02);
+    background: var(--hidden-color);
+    border-radius: var(--roundness);
+    color: transparent;
+    transition: all 0.15s;
+    box-shadow: none;
+}
+
+[role="spoiler"]:hover,
+[role="spoiler"]:active,
+[role="spoiler"]:focus {
+    background: var(--active-color);
+    color: inherit;
+}
+
+hue,
+sat,
+lit,
+theme,
+comment {
+    display: none;
+}
+
+hr + br {
+    display: none;
+}
+
+r {
+    /* row */
+    display: block;
+}
+
+rf {
+    /* row flow */
+    display: flex;
+    align-items: center;
+}
+
+br:not(.cm-line br) {
+    display: block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+blockquote p {
+    @apply !text-lime-800 dark:!text-lime-200 border-l-4 border-[currentColor] pl-2;
+}
+
+pre {
+    @apply pl-2 border-l-4 border-red-800 dark:border-red-200;
+}
+
+code:not(pre code),
+.code {
+    @apply text-red-800 dark:text-red-100 bg-red-300/10 dark:bg-red-300/10;
+    padding: 0.2rem;
+    font-family: monospace;
+    font-size: 13.5px;
+    line-height: 1rem;
+    max-width: 100%;
+}
+
+/* footer */
+.footernav {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.footernav .item {
+    position: relative;
+    margin-left: 0.5rem;
+}
+
+.footernav .item:first-child {
+    margin-left: 0;
+}
+
+.footernav .item::before {
+    content: "·";
+    position: absolute;
+    left: -0.75rem;
+}
+
+.footernav .item:first-child:before {
+    display: none;
+}
+
+/* codemirror */
+.CodeMirror {
+    background: transparent !important;
+    font-family: inherit !important;
+    height: 10rem !important;
+    min-height: 100%;
+    max-height: 100%;
+    cursor: text;
+}
+
+.CodeMirror-cursor {
+    @apply !border-black dark:!border-white;
+    height: 22px !important;
+}
+
+.CodeMirror-selected {
+    @apply !bg-blue-200 dark:!bg-zinc-700;
+}
+
+.cm-header {
+    color: inherit !important;
+}
+
+.cm-variable-2,
+.cm-quote {
+    @apply !text-lime-800 dark:!text-lime-200;
+}
+
+.cm-comment {
+    @apply !text-red-800 dark:!text-red-200;
+}
+
+.cm-link {
+    @apply !text-blue-800 dark:!text-blue-300;
+}
+
+.cm-url {
+    @apply !text-blue-700 dark:!text-blue-200;
 }

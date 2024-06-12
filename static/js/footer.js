@@ -15,9 +15,7 @@ const text_tab = document.getElementById("text_tab");
 const preview_button = document.getElementById("preview_button");
 const preview_tab = document.getElementById("preview_tab");
 
-const content_field = document.getElementById("content");
-
-if (text_button && preview_button && content_field) {
+if (text_button && preview_button) {
     text_button.addEventListener("click", () => {
         preview_button.classList.add("secondary");
         text_button.classList.remove("secondary");
@@ -40,7 +38,7 @@ if (text_button && preview_button && content_field) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ content: content_field.value }),
+                body: JSON.stringify({ content: globalThis.editor.getValue()  }),
             })
         ).text();
     });
