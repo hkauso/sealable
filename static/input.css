@@ -24,6 +24,10 @@ hr {
     @apply p-2;
 }
 
+.card.secondary {
+    @apply bg-zinc-300 dark:bg-zinc-900;
+}
+
 .card.round {
     @apply rounded-sm;
 }
@@ -56,6 +60,11 @@ a.button.secondary {
 button.tab,
 a.button.tab {
     @apply rounded-t;
+}
+
+button[disabled],
+a.button[disabled] {
+    @apply opacity-50 cursor-not-allowed;
 }
 
 /* typography */

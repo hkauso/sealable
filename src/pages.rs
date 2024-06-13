@@ -12,6 +12,7 @@ use sauropod::markdown::parse_markdown as shared_parse_markdown;
 
 pub fn routes(database: Database) -> Router {
     Router::new()
+        .route("/:url/edit/config", get(config_editor_request))
         .route("/:url/edit", get(editor_request))
         .route("/:url", get(view_paste_request))
         .route("/api/render", post(render_markdown))
@@ -39,7 +40,6 @@ struct PasteViewTemplate {
 #[derive(Template)]
 #[template(path = "error.html")]
 struct ErrorViewTemplate {
-    title: String,
     error: String,
 }
 
@@ -54,7 +54,6 @@ pub async fn view_paste_request(
         }
         Err(e) => Html(
             ErrorViewTemplate {
-                title: "Error".to_string(),
                 error: e.to_string(),
             }
             .render()
@@ -77,7 +76,47 @@ pub async fn editor_request(
         Ok(p) => Html(EditorTemplate { paste: p }.render().unwrap()),
         Err(e) => Html(
             ErrorViewTemplate {
-                title: "Error".to_string(),
+                error: e.to_string(),
+            }
+            .render()
+            .unwrap(),
+        ),
+    }
+}
+
+#[derive(Template)]
+#[template(path = "paste_metadata.html")]
+struct ConfigEditorTemplate {
+    paste: Paste,
+    paste_metadata: String,
+}
+
+pub async fn config_editor_request(
+    Path(url): Path<String>,
+    State(database): State<Database>,
+) -> impl IntoResponse {
+    match database.get_paste_by_url(url).await {
+        Ok(p) => Html(
+            ConfigEditorTemplate {
+                paste: p.clone(),
+                paste_metadata: match serde_json::to_string(&p.metadata) {
+                    Ok(m) => m,
+                    Err(_) => {
+                        return Html(
+                            ErrorViewTemplate {
+                                error: pastemd::model::PasteError::Other.to_string(),
+                            }
+                            .render()
+                            .unwrap(),
+                        )
+                    }
+                },
+            }
+            .render()
+            .unwrap(),
+        ),
+        Err(e) => Html(
+            ErrorViewTemplate {
                 error: e.to_string(),
             }
             .render()
