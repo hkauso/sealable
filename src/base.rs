@@ -7,6 +7,8 @@ pub struct BaseStore {
     pub site_name: String,
     /// `INFO_URL` variable, "what" in the footer
     pub info_url: String,
+    /// `BODY_EMBED` variable, HTML that is embedded on every page
+    pub body_embed: String,
 }
 
 impl BaseStore {
@@ -17,6 +19,10 @@ impl BaseStore {
                 Err(_) => String::from("Sealable"),
             },
             info_url: match env::var("INFO_URL") {
+                Ok(s) => s,
+                Err(_) => String::new(),
+            },
+            body_embed: match env::var("BODY_EMBED") {
                 Ok(s) => s,
                 Err(_) => String::new(),
             },
