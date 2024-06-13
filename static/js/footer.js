@@ -38,7 +38,7 @@ if (text_button && preview_button) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ content: globalThis.editor.getValue()  }),
+                body: JSON.stringify({ content: globalThis.editor.getValue() }),
             })
         ).text();
     });
@@ -50,3 +50,42 @@ const search = new URLSearchParams(window.location.search);
 if (search.get("SECRET")) {
     alert(`Page secret: ${search.get("SECRET")}`);
 }
+
+// theme
+globalThis.sun_icon = document.getElementById("theme_icon_sun");
+globalThis.moon_icon = document.getElementById("theme_icon_moon");
+
+globalThis.update_theme_icon = () => {
+    if (document.documentElement.classList.contains("dark")) {
+        globalThis.sun_icon.style.display = "none";
+        globalThis.moon_icon.style.display = "flex";
+    } else {
+        globalThis.sun_icon.style.display = "flex";
+        globalThis.moon_icon.style.display = "none";
+    }
+};
+
+globalThis.update_theme_icon(); // initial update
+
+globalThis.toggle_theme = () => {
+    if (
+        window.PASTE_USES_CUSTOM_THEME &&
+        window.localStorage.getItem("se:user.ForceClientTheme") !== "true"
+    ) {
+        return;
+    }
+
+    const current = window.localStorage.getItem("theme");
+
+    if (current === "dark") {
+        /* set light */
+        document.documentElement.classList.remove("dark");
+        window.localStorage.setItem("theme", "light");
+    } else {
+        /* set dark */
+        document.documentElement.classList.add("dark");
+        window.localStorage.setItem("theme", "dark");
+    }
+
+    globalThis.update_theme_icon();
+};

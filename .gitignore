@@ -2,3 +2,4 @@
 *.db
 static/style.css
 static/favicon.svg
+.env

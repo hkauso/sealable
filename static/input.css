@@ -7,7 +7,7 @@
 }
 
 body {
-    @apply bg-zinc-300 dark:bg-zinc-900 h-screen;
+    @apply bg-neutral-300 dark:bg-neutral-900 h-screen;
 }
 
 main {
@@ -15,17 +15,17 @@ main {
 }
 
 hr {
-    @apply border-zinc-400/50 dark:border-zinc-700/50;
+    @apply border-neutral-400/50 dark:border-neutral-700/50;
 }
 
 /* card */
 .card {
-    @apply bg-zinc-200 dark:bg-zinc-800;
+    @apply bg-neutral-200 dark:bg-neutral-800;
     @apply p-2;
 }
 
 .card.secondary {
-    @apply bg-zinc-300 dark:bg-zinc-900;
+    @apply bg-neutral-300 dark:bg-neutral-900;
 }
 
 .card.round {
@@ -39,9 +39,9 @@ hr {
 /* button */
 button,
 a.button {
-    @apply bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-100 hover:dark:bg-zinc-700/50; /* bg */
+    @apply bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-100 hover:dark:bg-neutral-700/50; /* bg */
     @apply flex gap-2 items-center justify-center; /* flex */
-    @apply transition-all px-3 py-1 text-gray-950 dark:text-slate-200 w-max; /* misc */
+    @apply transition-all px-3 py-1 !text-gray-950 dark:!text-slate-200 w-max; /* misc */
     user-select: none;
     text-decoration: none !important;
     height: max-content;
@@ -54,7 +54,7 @@ a.button.round {
 
 button.secondary,
 a.button.secondary {
-    @apply bg-zinc-300 dark:bg-zinc-900 hover:bg-zinc-200 hover:dark:bg-zinc-800;
+    @apply bg-neutral-300 dark:bg-neutral-900 hover:bg-neutral-200 hover:dark:bg-neutral-800;
 }
 
 button.tab,
@@ -68,8 +68,11 @@ a.button[disabled] {
 }
 
 /* typography */
-a {
-    @apply text-blue-800 dark:text-blue-300 hover:underline;
+a,
+a code,
+a strong,
+a em {
+    @apply !text-blue-800 dark:!text-blue-300 hover:underline;
 }
 
 h1,
@@ -149,7 +152,7 @@ textarea {
 }
 
 input {
-    @apply bg-zinc-200 dark:bg-zinc-800 focus:bg-zinc-200 focus:dark:bg-zinc-700/50;
+    @apply bg-neutral-200 dark:bg-neutral-800 focus:bg-neutral-200 focus:dark:bg-neutral-700/50;
     @apply px-3 py-1 rounded-sm;
 }
 
@@ -230,12 +233,47 @@ pre {
 
 code:not(pre code),
 .code {
-    @apply text-red-800 dark:text-red-100 bg-red-300/10 dark:bg-red-300/10;
-    padding: 0.2rem;
+    @apply text-red-800 dark:text-red-100 bg-red-300/10 dark:bg-red-300/10 rounded p-1;
     font-family: monospace;
     font-size: 13.5px;
     line-height: 1rem;
     max-width: 100%;
+}
+
+.mdnote {
+    @apply p-4 w-full mb-4 rounded;
+}
+
+.mdnote.note-warn {
+    @apply bg-yellow-300/25 dark:bg-yellow-300/15;
+}
+
+.mdnote.note-warn .mdnote-title {
+    @apply text-yellow-900 dark:text-yellow-200/75;
+}
+
+.mdnote.note-info {
+    @apply bg-sky-400/25 dark:bg-sky-400/15;
+}
+
+.mdnote.note-info .mdnote-title {
+    @apply text-sky-900 dark:text-sky-300/75;
+}
+
+.mdnote.note-note {
+    @apply bg-green-400/25 dark:bg-green-400/15;
+}
+
+.mdnote.note-note .mdnote-title {
+    @apply text-green-900 dark:text-green-300/75;
+}
+
+.mdnote.note-error {
+    @apply bg-red-400/25 dark:bg-red-400/15;
+}
+
+.mdnote.note-error .mdnote-title {
+    @apply text-red-900 dark:text-red-200/75;
 }
 
 /* footer */
@@ -279,7 +317,7 @@ code:not(pre code),
 }
 
 .CodeMirror-selected {
-    @apply !bg-blue-200 dark:!bg-zinc-700;
+    @apply !bg-blue-200 dark:!bg-neutral-700;
 }
 
 .cm-header {
@@ -301,4 +339,8 @@ code:not(pre code),
 
 .cm-url {
     @apply !text-blue-700 dark:!text-blue-200;
+}
+
+.cm-variable-3 {
+    @apply !text-violet-800 dark:!text-violet-200;
 }

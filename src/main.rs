@@ -2,6 +2,7 @@ use axum::{routing::get, Router};
 use pastemd::{database::Database, routing::api, DatabaseOpts};
 use std::env;
 
+mod base;
 mod pages;
 
 #[tokio::main]

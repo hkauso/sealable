@@ -1,6 +1,6 @@
-{% extends "./base.html" %} {% block title %}Editing "{{ paste.url }}" –
-Sealable{% endblock %} {% block mainstuff %}style="height: 100%; display: flex;
-flex-direction: column;"{% endblock %} {% block content %}
+{% extends "./base.html" %} {% block title %}Editing "{{ paste.url }}" – {{
+base.site_name }}{% endblock %} {% block mainstuff %}style="height: 100%;
+display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <div class="flex flex-col w-full h-full">
     <!-- toolbar -->
     <div class="flex">
@@ -51,7 +51,7 @@ flex-direction: column;"{% endblock %} {% block content %}
             <div class="flex justify-between align-center gap-2">
                 <div class="flex gap-2">
                     <button
-                        class="round mb-2 text-emerald-800 dark:text-emerald-300"
+                        class="round mb-2 !text-emerald-800 dark:!text-emerald-300"
                     >
                         Save
                     </button>
@@ -62,7 +62,7 @@ flex-direction: column;"{% endblock %} {% block content %}
                 </div>
 
                 <button
-                    class="round mb-2 text-red-800 dark:text-red-300"
+                    class="round mb-2 !text-red-800 dark:!text-red-300"
                     id="delete_paste"
                     data-endpoint="/api/{{ paste.url }}/delete"
                     type="button"
