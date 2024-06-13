@@ -14,21 +14,24 @@ async fn main() {
         Err(_) => 8080,
     };
 
-    let database = Database::new(DatabaseOpts {
-        // dorsal expects "_type" and "host" to be Option but "env::var" gives Result...
-        // we just need to convert the result to an option
-        _type: match env::var("DB_TYPE") {
-            Ok(v) => Option::Some(v),
-            Err(_) => Option::None,
+    let database = Database::new(
+        DatabaseOpts {
+            // dorsal expects "_type" and "host" to be Option but "env::var" gives Result...
+            // we just need to convert the result to an option
+            _type: match env::var("DB_TYPE") {
+                Ok(v) => Option::Some(v),
+                Err(_) => Option::None,
+            },
+            host: match env::var("DB_HOST") {
+                Ok(v) => Option::Some(v),
+                Err(_) => Option::None,
+            },
+            user: env::var("DB_USER").unwrap_or(String::new()),
+            pass: env::var("DB_PASS").unwrap_or(String::new()),
+            name: env::var("DB_NAME").unwrap_or(String::new()),
         },
-        host: match env::var("DB_HOST") {
-            Ok(v) => Option::Some(v),
-            Err(_) => Option::None,
-        },
-        user: env::var("DB_USER").unwrap_or(String::new()),
-        pass: env::var("DB_PASS").unwrap_or(String::new()),
-        name: env::var("DB_NAME").unwrap_or(String::new()),
-    })
+        pastemd::database::ServerOptions::default(),
+    )
     .await;
 
     database.init().await;
