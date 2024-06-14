@@ -30,7 +30,7 @@ async fn main() {
             pass: env::var("DB_PASS").unwrap_or(String::new()),
             name: env::var("DB_NAME").unwrap_or(String::new()),
         },
-        pastemd::database::ServerOptions::default(),
+        pastemd::database::ServerOptions::truthy(),
     )
     .await;
 

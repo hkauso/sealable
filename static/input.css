@@ -146,6 +146,14 @@ menu {
     padding: 0 0 0 40px;
 }
 
+strong,
+em,
+del,
+[role="underline"] {
+    color: inherit;
+    font-family: inherit;
+}
+
 /* input */
 textarea {
     @apply bg-transparent p-2 rounded-sm min-h-full resize-none;

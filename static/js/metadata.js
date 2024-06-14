@@ -14,7 +14,7 @@ export default function metadata_editor(bind_to, paste_url, metadata) {
 
     // render
     for (const field of Object.entries(metadata)) {
-        bind_to.innerHTML += `<div class="card secondary round flex justify-between items-center gap-2" id="field:${field[0]}">
+        bind_to.innerHTML += `<div class="card secondary round flex justify-between items-center gap-2" style="flex-wrap: wrap;" id="field:${field[0]}">
             <label for="field_input:${field[0]}">${field[0]}</label>
             <input 
               id="field_input:${field[0]}" 
