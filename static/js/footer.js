@@ -89,3 +89,12 @@ globalThis.toggle_theme = () => {
 
     globalThis.update_theme_icon();
 };
+
+// wants redirect
+for (const element of Array.from(
+    document.querySelectorAll('[data-wants-redirect="true"]'),
+)) {
+    element.href = `${element.href}?callback=${encodeURIComponent(
+        `${window.location.origin}/api/auth/callback`,
+    )}`;
+}

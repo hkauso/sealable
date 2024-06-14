@@ -21,7 +21,6 @@
         {% block head %}{% endblock %}
 
         <link rel="stylesheet" href="/static/style.css" />
-        <script type="module" src="/static/js/Footer.js"></script>
 
         <!-- prefer default user color theme -->
         <script>
@@ -42,6 +41,13 @@
                 const current = window.localStorage.getItem("theme");
                 document.documentElement.className = current;
             }
+        </script>
+
+        <!-- ... -->
+        <script>
+            globalThis._sealable_base = {
+                guppy_root: "{{ base.guppy_root }}",
+            };
         </script>
     </head>
 

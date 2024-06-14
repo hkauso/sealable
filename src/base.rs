@@ -9,6 +9,8 @@ pub struct BaseStore {
     pub info_url: String,
     /// `BODY_EMBED` variable, HTML that is embedded on every page
     pub body_embed: String,
+    /// `GUPPY_ROOT` variable, for guppy auth (disabled if not provided)
+    pub guppy_root: String,
 }
 
 impl BaseStore {
@@ -23,6 +25,10 @@ impl BaseStore {
                 Err(_) => String::new(),
             },
             body_embed: match env::var("BODY_EMBED") {
+                Ok(s) => s,
+                Err(_) => String::new(),
+            },
+            guppy_root: match env::var("GUPPY_ROOT") {
                 Ok(s) => s,
                 Err(_) => String::new(),
             },

@@ -30,7 +30,10 @@ async fn main() {
             pass: env::var("DB_PASS").unwrap_or(String::new()),
             name: env::var("DB_NAME").unwrap_or(String::new()),
         },
-        pastemd::database::ServerOptions::truthy(),
+        pastemd::database::ServerOptions {
+            view_password: true,
+            guppy: env::var("GUPPY_ROOT").is_ok(),
+        },
     )
     .await;
 
