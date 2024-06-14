@@ -65,17 +65,6 @@ pub async fn view_paste_request(
 ) -> impl IntoResponse {
     match database.get_paste_by_url(url).await {
         Ok(p) => {
-            // push view
-            if let Err(e) = database.incr_views_by_url(p.url.clone()).await {
-                return Html(
-                    ErrorViewTemplate {
-                        error: e.to_string(),
-                    }
-                    .render()
-                    .unwrap(),
-                );
-            }
-
             // check for view password
             if database.options.view_password == true {
                 match query_params.view_password.is_empty() {
@@ -92,6 +81,18 @@ pub async fn view_paste_request(
                         }
                     }
                 }
+            }
+
+            // push view
+            // we could not support paste views by just.. not doing this
+            if let Err(e) = database.incr_views_by_url(p.url.clone()).await {
+                return Html(
+                    ErrorViewTemplate {
+                        error: e.to_string(),
+                    }
+                    .render()
+                    .unwrap(),
+                );
             }
 
             // ...

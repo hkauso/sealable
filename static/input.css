@@ -150,8 +150,8 @@ strong,
 em,
 del,
 [role="underline"] {
-    color: inherit;
-    font-family: inherit;
+    color: inherit !important;
+    font-family: inherit !important;
 }
 
 /* input */
@@ -216,7 +216,11 @@ r {
 rf {
     /* row flow */
     display: flex;
-    align-items: center;
+    justify-content: center;
+}
+
+rf.justify-right {
+    justify-content: right;
 }
 
 br:not(.cm-line br) {
