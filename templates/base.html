@@ -72,13 +72,13 @@
                         <span class="item">
                             <a href="/{{ base.info_url }}">what</a>
                         </span>
-                        {% endif %}
-
+                        {% endif %} {% if base.secret == false %}
                         <span class="item">
                             <a href="https://github.com/hkauso/sealable">
                                 source
                             </a>
                         </span>
+                        {% endif %}
                     </div>
 
                     <!-- theme -->

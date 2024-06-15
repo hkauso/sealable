@@ -14,6 +14,13 @@ export default function metadata_editor(bind_to, paste_url, metadata) {
 
     // render
     for (const field of Object.entries(metadata)) {
+        if (
+            globalThis._sealable_base.guppy_root === "" &&
+            field[0] === "owner"
+        ) {
+            continue;
+        }
+
         bind_to.innerHTML += `<div class="card secondary round flex justify-between items-center gap-2" style="flex-wrap: wrap;" id="field:${field[0]}">
             <label for="field_input:${field[0]}">${field[0]}</label>
             <input 
@@ -47,10 +54,9 @@ export default function metadata_editor(bind_to, paste_url, metadata) {
             ).json();
 
             if (res.success === false) {
-                // TODO: do something better with the error
-                alert(res.message);
+                window.location.href = `?SECRET=${res.message}&SECRET_TYPE=note-error&SECRET_TITLE=Error`;
             } else {
-                window.location.reload();
+                window.location.href = `?SECRET=${res.message}`;
             }
         });
 }

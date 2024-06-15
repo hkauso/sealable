@@ -11,6 +11,8 @@ pub struct BaseStore {
     pub body_embed: String,
     /// `GUPPY_ROOT` variable, for guppy auth (disabled if not provided)
     pub guppy_root: String,
+    /// `SECRET` variable, "true" makes the footer not link to the source
+    pub secret: bool,
 }
 
 impl BaseStore {
@@ -31,6 +33,10 @@ impl BaseStore {
             guppy_root: match env::var("GUPPY_ROOT") {
                 Ok(s) => s,
                 Err(_) => String::new(),
+            },
+            secret: match env::var("SECRET") {
+                Ok(s) => s == "true",
+                Err(_) => false,
             },
         }
     }

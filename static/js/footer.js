@@ -47,10 +47,39 @@ if (text_button && preview_button) {
 }
 
 // "SECRET"
+globalThis._sealable_base.gen_secret = (type, title, content) => {
+    if (document.getElementById("SECRET")) {
+        // there can only be one
+        document.getElementById("SECRET").remove();
+    }
+    
+    const element = document.createElement("div");
+    element.id = "SECRET";
+    element.classList.add("mdnote");
+    element.classList.add(type);
+    element.innerHTML = `<b class="mdnote-title">${title}</b><p>${content}</p>`;
+    document.querySelector("main").prepend(element);
+};
+
+// secret from query params
 const search = new URLSearchParams(window.location.search);
 
 if (search.get("SECRET")) {
-    alert(`Page secret: ${search.get("SECRET")}`);
+    // get defaults
+    // we'll always use the value given in a query param over the page-set value
+    const secret_type = search.get("SECRET_TYPE")
+        ? search.get("SECRET_TYPE")
+        : globalThis._sealable_base.secret.type;
+    const secret_title = search.get("SECRET_TITLE")
+        ? search.get("SECRET_TITLE")
+        : globalThis._sealable_base.secret.title;
+
+    // ...
+    globalThis._sealable_base.gen_secret(
+        secret_type,
+        secret_title,
+        search.get("SECRET"),
+    );
 }
 
 // theme

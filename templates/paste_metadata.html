@@ -105,6 +105,12 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
 
 <script type="module">
     import metadata_editor from "/static/js/metadata.js";
+
+    globalThis._sealable_base.secret = {
+        type: "note-info",
+        title: "Notice",
+    };
+
     metadata_editor(
         document.getElementById("metadata_editor"),
         "{{ paste.url }}",

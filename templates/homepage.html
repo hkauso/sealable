@@ -68,8 +68,11 @@ flex-direction: column;"{% endblock %}{% block content %}
             ).json();
 
             if (res.success === false) {
-                // TODO: do something better with the error
-                alert(res.message);
+                globalThis._sealable_base.gen_secret(
+                    "note-error",
+                    "Error",
+                    res.message,
+                );
             } else {
                 window.location.href = `/${res.payload[1].url}?SECRET=${res.payload[0]}`;
             }

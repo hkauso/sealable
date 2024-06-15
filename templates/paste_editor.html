@@ -107,14 +107,13 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
             ).json();
 
             if (res.success === false) {
-                // TODO: do something better with the error
-                alert(res.message);
+                window.location.href = `?SECRET=${res.message}&SECRET_TYPE=note-error&SECRET_TITLE=Error`;
             } else {
                 let url =
                     (e.target.new_url || { value: "" }).value ||
                     "{{ paste.url }}";
 
-                window.location.href = `/${url}`;
+                window.location.href = `/${url}?SECRET=${res.message}&SECRET_TYPE=note-info&SECRET_TITLE=Notice`;
             }
         });
 
@@ -148,10 +147,10 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
             ).json();
 
             if (res.success === false) {
-                // TODO: do something better with the error
-                alert(res.message);
+                window.location.href = `?SECRET=${res.message}&SECRET_TYPE=note-error&SECRET_TITLE=Error`;
             } else {
-                window.location.href = "/";
+                window.location.href =
+                    "/?SECRET=Paste%20deleted.&SECRET_TYPE=note-info&SECRET_TITLE=Notice";
             }
         });
 </script>
