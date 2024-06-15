@@ -41,6 +41,8 @@ if (text_button && preview_button) {
                 body: JSON.stringify({ content: globalThis.editor.getValue() }),
             })
         ).text();
+
+        globalThis._sealable_base.fix_markdown("preview_tab"); // fix markdown
     });
 }
 
