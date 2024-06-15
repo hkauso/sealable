@@ -22,6 +22,7 @@ export default function metadata_editor(bind_to, paste_url, metadata) {
               value="${field[1].replace('"', '\\"')}"
               onchange="globalThis.update_metadata_value('${field[0]}', event.target.value)"
               style="width: max-content"
+              ${field[0] === "owner" ? "disabled" : ""}
             />
         </div>`;
     }

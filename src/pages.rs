@@ -5,6 +5,7 @@ use axum::{
     routing::{get, post, get_service},
     Router,
 };
+use axum_extra::extract::cookie::CookieJar;
 
 use tower_http::services::ServeDir;
 use pastemd::{database::Database, model::Paste};
@@ -170,13 +171,30 @@ pub async fn editor_request(
 struct ConfigEditorTemplate {
     paste: Paste,
     paste_metadata: String,
+    auth_user: String,
 }
 
 pub async fn config_editor_request(
+    jar: CookieJar,
     Path(url): Path<String>,
     State(database): State<Database>,
     Query(query_params): Query<PasteViewQuery>,
 ) -> impl IntoResponse {
+    // get user from token
+    let auth_user = match jar.get("__Secure-Token") {
+        Some(c) => match database
+            .auth
+            .get_user_by_unhashed(c.value_trimmed().to_string())
+            .await
+            .payload
+        {
+            Some(ua) => ua.user.username,
+            None => String::new(),
+        },
+        None => String::new(),
+    };
+
+    // ...
     match database.get_paste_by_url(url).await {
         Ok(p) => {
             // check for view password
@@ -213,6 +231,7 @@ pub async fn config_editor_request(
                             )
                         }
                     },
+                    auth_user,
                 }
                 .render()
                 .unwrap(),

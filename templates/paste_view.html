@@ -24,6 +24,20 @@
                 </span>
             </span>
 
+            <!-- prettier-ignore -->
+            {% if !base.guppy_root.is_empty() && !paste.metadata.owner.is_empty() %}
+            <span>
+                Owner:
+                <a
+                    href="{{ base.guppy_root }}/{{ paste.metadata.owner }}"
+                    target="_blank"
+                >
+                    <!-- TODO: show owner nickname -->
+                    {{ paste.metadata.owner }}
+                </a>
+            </span>
+            {% endif %}
+
             <span>Views: {{ views }}</span>
         </div>
     </div>

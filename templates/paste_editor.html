@@ -158,13 +158,10 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <!-- prettier-ignore -->
 <script type="text/markdown" id="content">{{ paste.content|safe }}</script>
 
+<script src="/static/js/editor.js"></script>
 <script>
-    globalThis.editor = CodeMirror(document.getElementById("text_tab"), {
-        value: document.getElementById("content").innerText,
-        mode: "markdown",
-        placeholder: "Content",
-        lineWrapping: true,
-        autoCloseBrackets: true,
-    });
+    globalThis._sealable_base.create_editor(
+        document.getElementById("content").innerText,
+    );
 </script>
 {% call super() %} {% endblock %}

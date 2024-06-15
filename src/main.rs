@@ -33,6 +33,7 @@ async fn main() {
         pastemd::database::ServerOptions {
             view_password: true,
             guppy: env::var("GUPPY_ROOT").is_ok(),
+            paste_ownership: true,
         },
     )
     .await;

@@ -98,3 +98,22 @@ for (const element of Array.from(
         `${window.location.origin}/api/auth/callback`,
     )}`;
 }
+
+// logout protection
+for (const element of Array.from(
+    document.querySelectorAll('a[href="/api/auth/logout"]'),
+)) {
+    element.href = "javascript:globalThis._sealable_base.logout()";
+}
+
+globalThis._sealable_base.logout = () => {
+    if (
+        !confirm(
+            "This will log you out of your account. Are you sure you would like to do this?",
+        )
+    ) {
+        return;
+    }
+
+    window.location.href = "/api/auth/logout";
+};

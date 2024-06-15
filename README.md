@@ -9,6 +9,8 @@ Sealable supports the following configuration options through environment variab
 * `SITE_NAME` - the name of the site
 * `INFO_URL` - the url (relative to root `/`) that will be served from the "what" link in the footer
   * Link is not shown in the footer if this variable is not set
+* `GUPPY_ROOT` - the root url of a [Guppy](https://github.com/stellularorg/guppy) server
+  * User authentication is completely disabled if this is not provided
 
 The following configuration options are required for all database types (besides sqlite):
 

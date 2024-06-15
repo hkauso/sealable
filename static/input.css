@@ -41,7 +41,7 @@ button,
 a.button {
     @apply bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-100 hover:dark:bg-neutral-700/50; /* bg */
     @apply flex gap-2 items-center justify-center; /* flex */
-    @apply transition-all px-3 py-1 !text-gray-950 dark:!text-slate-200 w-max; /* misc */
+    @apply transition-all px-3 py-1 text-gray-950 dark:text-slate-200 w-max; /* misc */
     user-select: none;
     text-decoration: none !important;
     height: max-content;
@@ -72,7 +72,7 @@ a,
 a code,
 a strong,
 a em {
-    @apply !text-blue-800 dark:!text-blue-300 hover:underline;
+    @apply text-blue-800 dark:text-blue-300 hover:underline;
 }
 
 h1,
@@ -171,6 +171,11 @@ input {
 
 input.small {
     @apply h-[32px];
+}
+
+input[disabled],
+textarea[disabled] {
+    @apply opacity-50 cursor-not-allowed;
 }
 
 /* ... */
@@ -328,7 +333,8 @@ code:not(pre code),
     height: 22px !important;
 }
 
-.CodeMirror-selected {
+[role="presentation"]::selection,
+[role="presentation"] *::selection {
     @apply !bg-blue-200 dark:!bg-neutral-700;
 }
 

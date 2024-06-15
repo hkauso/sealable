@@ -83,13 +83,8 @@ flex-direction: column;"{% endblock %}{% block content %}
     href="https://unpkg.com/codemirror@5.39.2/lib/codemirror.css"
 />
 
+<script src="/static/js/editor.js"></script>
 <script>
-    globalThis.editor = CodeMirror(document.getElementById("text_tab"), {
-        value: "",
-        mode: "markdown",
-        placeholder: "Content",
-        lineWrapping: true,
-        autoCloseBrackets: true,
-    });
+    globalThis._sealable_base.create_editor("");
 </script>
 {% call super() %} {% endblock %}

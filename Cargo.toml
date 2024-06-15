@@ -3,7 +3,7 @@ name = "sealable"
 authors = ["hkau"]
 license = "MIT"
 
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 
 [features]
@@ -23,5 +23,6 @@ dotenv = "0.15.0"
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 # pastemd = { path = "../pastemd", default-features = false }
-pastemd = { version = "0.1.8", default-features = false }
+pastemd = { version = "0.1.9", default-features = false }
 sauropod = "0.1.1"
+axum-extra = { version = "0.9.3", features = ["cookie"] }
