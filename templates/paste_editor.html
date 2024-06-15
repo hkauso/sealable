@@ -30,6 +30,12 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
                     placeholder="Password"
                     required
                     class="small"
+                    {%
+                    if
+                    passwordless
+                    %}disabled{%
+                    endif
+                    %}
                 />
 
                 <input

@@ -80,6 +80,12 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
                     placeholder="Password"
                     class="small"
                     required
+                    {%
+                    if
+                    passwordless
+                    %}disabled{%
+                    endif
+                    %}
                 />
             </div>
 

@@ -1,6 +1,6 @@
 {% extends "./base.html" %} {% block head %}
 <meta property="og:title" content="{{ paste.url }}" />
-{% endblock %}{% block content %}
+{{ head_stuff|safe }} {% endblock %}{% block content %}
 <div class="flex flex-col w-full h-full gap-2">
     <div class="card more_padding round min-h-[15rem]" id="tab_container">
         {{ rendered|safe }}
