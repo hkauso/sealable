@@ -167,10 +167,9 @@ pub async fn editor_request(
             .auth
             .get_user_by_unhashed(c.value_trimmed().to_string())
             .await
-            .payload
         {
-            Some(ua) => ua.user.username,
-            None => String::new(),
+            Ok(ua) => ua.user.username,
+            Err(_) => String::new(),
         },
         None => String::new(),
     };
@@ -238,10 +237,9 @@ pub async fn config_editor_request(
             .auth
             .get_user_by_unhashed(c.value_trimmed().to_string())
             .await
-            .payload
         {
-            Some(ua) => ua.user.username,
-            None => String::new(),
+            Ok(ua) => ua.user.username,
+            Err(_) => String::new(),
         },
         None => String::new(),
     };
