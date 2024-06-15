@@ -74,18 +74,20 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
         <fieldset class="w-full my-2">
             <!-- inputs -->
             <div class="gap-2 flex items-center float-right mb-2">
+                <!-- prettier-ignore -->
                 <input
                     name="password"
                     id="password"
+                    {% if passwordless %}
+                    placeholder="Not needed, you're the owner!"
+                    {% else %}
                     placeholder="Password"
-                    class="small"
+                    {% endif %}
                     required
-                    {%
-                    if
-                    passwordless
-                    %}disabled{%
-                    endif
-                    %}
+                    class="small"
+                    {% if passwordless %}
+                    disabled
+                    {% endif %}
                 />
             </div>
 

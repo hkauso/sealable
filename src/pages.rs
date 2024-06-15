@@ -197,7 +197,7 @@ pub async fn editor_request(
             }
 
             // ...
-            let passwordless = auth_user == p.metadata.owner;
+            let passwordless = !p.metadata.owner.is_empty() && auth_user == p.metadata.owner;
             Html(
                 EditorTemplate {
                     paste: p,
@@ -268,7 +268,7 @@ pub async fn config_editor_request(
             }
 
             // ...
-            let passwordless = auth_user == p.metadata.owner;
+            let passwordless = !p.metadata.owner.is_empty() && auth_user == p.metadata.owner;
             Html(
                 ConfigEditorTemplate {
                     paste: p.clone(),
