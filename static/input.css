@@ -15,7 +15,7 @@ body {
 }
 
 main {
-    @apply w-full md:w-[80ch] max-w-full m-auto py-2 md:px-2;
+    @apply w-full md:w-[1140px] max-w-full m-auto py-2 md:px-2;
 }
 
 hr {
