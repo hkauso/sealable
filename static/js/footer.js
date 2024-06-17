@@ -32,6 +32,7 @@ if (text_button && preview_button) {
         preview_tab.style.display = "block";
 
         // render
+        preview_tab.innerHTML = "";
         preview_tab.innerHTML = await (
             await fetch("/api/render", {
                 method: "POST",

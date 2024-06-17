@@ -11,6 +11,7 @@ Sealable supports the following configuration options through environment variab
   * Link is not shown in the footer if this variable is not set
 * `GUPPY_ROOT` - the root url of a [Guppy](https://github.com/stellularorg/guppy) server
   * User authentication is completely disabled if this is not provided
+  * When provided, views switch from [`OpenMultiple`](https://docs.rs/pastemd/latest/pastemd/database/enum.ViewMode.html#variant.OpenMultiple), to [`AuthenticatedOnce`](https://docs.rs/pastemd/latest/pastemd/database/enum.ViewMode.html#variant.AuthenticatedOnce)
 
 The following configuration options are required for all database types (besides sqlite):
 

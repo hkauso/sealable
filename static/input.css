@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+body {
     @apply text-gray-950 dark:text-slate-200;
+}
+
+svg {
+    @apply stroke-current;
 }
 
 body {
@@ -11,7 +15,7 @@ body {
 }
 
 main {
-    @apply w-full md:w-[1140px] max-w-full m-auto py-2 md:px-2;
+    @apply w-full md:w-[80ch] max-w-full m-auto py-2 md:px-2;
 }
 
 hr {
@@ -62,6 +66,11 @@ a.button.tertiary {
     @apply bg-neutral-300 dark:bg-neutral-900 hover:bg-neutral-300/50 hover:dark:bg-neutral-900/50;
 }
 
+button.theme\:primary,
+a.button.theme\:primary {
+    @apply !bg-brand hover:!bg-brand-low !text-black;
+}
+
 button.tab,
 a.button.tab {
     @apply rounded-t;
@@ -72,8 +81,18 @@ a.button[disabled] {
     @apply opacity-50 cursor-not-allowed;
 }
 
+button.green,
+a.button.green {
+    @apply !text-emerald-800 dark:!text-emerald-300;
+}
+
+button.red,
+a.button.red {
+    @apply !text-red-800 dark:!text-red-300;
+}
+
 /* typography */
-a,
+a:not(.flush):not(.button),
 a code,
 a strong,
 a em {
@@ -159,27 +178,48 @@ del,
     font-family: inherit !important;
 }
 
+hr {
+    @apply my-4;
+}
+
+img {
+    @apply max-w-full align-middle;
+}
+
 /* input */
 textarea {
     @apply bg-transparent p-2 rounded-sm min-h-full resize-none;
 }
 
-input {
+input,
+textarea.secondary,
+select {
     @apply bg-neutral-200 dark:bg-neutral-800 focus:bg-neutral-200 focus:dark:bg-neutral-700/50;
-    @apply px-3 py-1 rounded-sm text-ellipsis;
+}
+
+select {
+    height: 32px !important;
+}
+
+input,
+select {
+    @apply px-3 py-1 rounded-sm;
 }
 
 textarea,
-input {
-    @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 h-max w-full;
+input,
+select {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-low h-max w-full;
 }
 
-input.small {
+input.small,
+select.small {
     @apply h-[32px];
 }
 
 input[disabled],
-textarea[disabled] {
+textarea[disabled],
+select[disabled] {
     @apply opacity-50 cursor-not-allowed;
 }
 
@@ -323,8 +363,78 @@ code:not(pre code),
     display: none;
 }
 
+/* avatar */
+.avatar {
+    --size: 50px;
+    border-radius: var(--roundness);
+    width: var(--size);
+    height: var(--size);
+}
+
+/* nav */
+nav {
+    @apply sticky top-0 w-full z-50; /* general */
+    @apply backdrop-blur-lg bg-neutral-200/75 dark:bg-neutral-800/75 px-4 py-2; /* look */
+    @apply shadow shadow-neutral-800/5 dark:shadow-neutral-800/25;
+    @apply flex justify-between items-center gap-2; /* layout */
+}
+
+nav button,
+nav .button,
+.link-list .option button,
+.link-list .option a.button {
+    @apply px-3 py-1 !bg-transparent hover:shadow-lg;
+    @apply hover:ring-2 hover:ring-brand-low; /* fancy effects */
+    min-height: 35px;
+}
+
+nav button.selected {
+    @apply !bg-brand text-black scale-105;
+}
+
+/* chips */
+.chip {
+    @apply px-3 py-1 rounded border border-current;
+}
+
+/* link list */
+.link-list {
+    @apply flex flex-col absolute bottom-0;
+    @apply backdrop-blur-lg bg-neutral-200/75 dark:bg-neutral-800/75;
+    @apply shadow shadow-neutral-800/5 dark:shadow-neutral-800/25;
+    @apply max-w-full max-h-full w-[25rem] h-max z-50;
+    overflow: hidden auto;
+}
+
+.link-list .option {
+    @apply flex justify-center bg-transparent p-4 transition-colors duration-150;
+    @apply hover:!bg-neutral-300/25 hover:dark:!bg-neutral-700/25;
+}
+
+.link-list .option button,
+.link-list .option a.button {
+    @apply w-full rounded-sm justify-start !bg-neutral-300 dark:!bg-neutral-700;
+}
+
+dialog {
+    @apply flex flex-col absolute bottom-0;
+    @apply backdrop-blur-lg bg-neutral-200/75 dark:bg-neutral-800/75;
+    @apply m-auto fixed border-none text-current shadow-md;
+    display: none;
+}
+
+dialog[open] {
+    display: block;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
 /* codemirror */
 .CodeMirror {
+    @apply text-gray-950 dark:text-slate-200;
     background: transparent !important;
     font-family: inherit !important;
     height: 10rem !important;
@@ -366,18 +476,4 @@ code:not(pre code),
 
 .cm-variable-3 {
     @apply !text-violet-800 dark:!text-violet-200;
-}
-
-/* nav */
-nav {
-    @apply sticky top-0 w-full z-50; /* general */
-    @apply backdrop-blur-lg bg-neutral-200/75 dark:bg-neutral-800/75 px-4 py-2; /* look */
-    @apply shadow shadow-neutral-800/5 dark:shadow-neutral-800/25;
-    @apply flex justify-between items-center gap-2; /* layout */
-}
-
-nav button,
-nav .button {
-    @apply px-3 py-1 !bg-transparent hover:shadow-lg;
-    @apply hover:ring-2 hover:ring-emerald-500 hover:scale-105; /* fancy effects */
 }
