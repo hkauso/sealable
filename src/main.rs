@@ -34,6 +34,11 @@ async fn main() {
             view_password: true,
             guppy: env::var("GUPPY_ROOT").is_ok(),
             paste_ownership: true,
+            view_mode: if env::var("GUPPY_ROOT").is_ok() {
+                pastemd::database::ViewMode::AuthenticatedOnce
+            } else {
+                pastemd::database::ViewMode::OpenMultiple
+            },
         },
     )
     .await;

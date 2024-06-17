@@ -61,12 +61,26 @@ struct ErrorViewTemplate {
 }
 
 pub async fn view_paste_request(
+    jar: CookieJar,
     Path(url): Path<String>,
     State(database): State<Database>,
     Query(query_params): Query<PasteViewQuery>,
 ) -> impl IntoResponse {
     match database.get_paste_by_url(url).await {
         Ok(p) => {
+            // get user from token
+            let auth_user = match jar.get("__Secure-Token") {
+                Some(c) => match database
+                    .auth
+                    .get_user_by_unhashed(c.value_trimmed().to_string())
+                    .await
+                {
+                    Ok(ua) => Some(ua),
+                    Err(_) => None,
+                },
+                None => None,
+            };
+
             // check for view password
             if database.options.view_password == true {
                 match query_params.view_password.is_empty() {
@@ -87,7 +101,7 @@ pub async fn view_paste_request(
 
             // push view
             // we could not support paste views by just.. not doing this
-            if let Err(e) = database.incr_views_by_url(p.url.clone()).await {
+            if let Err(e) = database.incr_views_by_url(p.url.clone(), auth_user).await {
                 return Html(
                     ErrorViewTemplate {
                         error: e.to_string(),
