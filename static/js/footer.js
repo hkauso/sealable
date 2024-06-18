@@ -124,7 +124,7 @@
             window.localStorage.setItem("theme", "dark");
         }
 
-        globalThis.update_theme_icon();
+        self.update_theme_icon();
     });
 
     // wants redirect
@@ -142,7 +142,7 @@
     for (const element of Array.from(
         document.querySelectorAll('a[href="/api/auth/logout"]'),
     )) {
-        element.href = "javascript:ns('auth').logout()";
+        element.href = "javascript:trigger('auth:logout')";
     }
 
     auth.define("logout", function (imports) {

@@ -86,3 +86,16 @@ globalThis.reg_ns = (ns, deps) => {
     console.log("registered namespace:", ns);
     return globalThis._sealable_base.ns_store[`$${ns}`];
 };
+
+/// Call a namespace function quickly
+globalThis.trigger = (id, args) => {
+    // get namespace
+    const [namespace, func] = id.split(":");
+    const self = ns(namespace);
+
+    if (!self) {
+        return console.error("namespace does not exist:", namespace);
+    }
+
+    return self[func](...(args || []));
+};
