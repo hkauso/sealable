@@ -49,8 +49,6 @@ flex-direction: column;"{% endblock %}{% block content %}
     </form>
 </div>
 
-<script src="/static/js/markdown.js"></script>
-
 <script>
     document
         .getElementById("submit_form")
@@ -92,13 +90,16 @@ flex-direction: column;"{% endblock %}{% block content %}
     href="https://unpkg.com/codemirror@5.39.2/lib/codemirror.css"
 />
 
-<script src="/static/js/editor.js"></script>
-<script src="/static/js/visual.js"></script>
-
 <script>
-    ns("editor").create_editor("");
-    ns("visual_editor").create_visual_editor(
-        document.getElementById("preview_tab"),
-    );
+    use("markdown", (markdown) => {
+        use("editor", (editor) => {
+            editor.create_editor("");
+            editor.init_tabs();
+        });
+    });
+
+    use("visual", (visual) => {
+        visual.create_visual_editor(document.getElementById("preview_tab"));
+    });
 </script>
 {% call super() %} {% endblock %}

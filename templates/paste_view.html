@@ -44,9 +44,11 @@
     </div>
 </div>
 
-<script src="/static/js/markdown.js"></script>
 <script>
-    ns("markdown").fix_markdown("tab_container");
+    use("markdown", (markdown) => {
+        markdown.fix_markdown("tab_container");
+    });
+
     globalThis._sealable_base.secret = {
         type: "note-info",
         title: "Edit Code",

@@ -99,3 +99,30 @@ globalThis.trigger = (id, args) => {
 
     return self[func](...(args || []));
 };
+
+/// Import a namespace from path (relative to `/static/js/ns/`)
+globalThis.use = (id, callback) => {
+    // check if namespace already exists
+    const res = globalThis._sealable_base.ns_store[`$${id}`];
+
+    if (res) {
+        return callback(res);
+    }
+
+    // create script to load
+    const script = document.createElement("script");
+    script.src = `/static/js/ns/${id}.js`;
+    document.head.appendChild(script);
+    script.setAttribute("data-registered", new Date().toISOString());
+
+    // run callback once the script loads
+    script.addEventListener("load", () => {
+        const res = globalThis._sealable_base.ns_store[`$${id}`];
+
+        if (!res) {
+            return console.error("imported namespace failed to register:", id);
+        }
+
+        callback(res);
+    });
+};

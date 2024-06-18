@@ -1,5 +1,5 @@
 (() => {
-    const self = reg_ns("visual_editor"); // register namespace
+    const self = reg_ns("visual"); // register namespace
 
     function visual_editor_event_feedback(event) {
         const target = event.target;

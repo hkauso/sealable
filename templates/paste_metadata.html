@@ -103,17 +103,18 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <!-- prettier-ignore -->
 <script type="application/json" id="metadata">{{ paste_metadata|safe }}</script>
 
-<script src="/static/js/metadata.js"></script>
 <script>
     globalThis._sealable_base.secret = {
         type: "note-info",
         title: "Notice",
     };
 
-    ns("metadata").metadata_editor(
-        document.getElementById("metadata_editor"),
-        "{{ paste.url }}",
-        JSON.parse(document.getElementById("metadata").innerHTML),
-    );
+    use("metadata", (metadata) => {
+        metadata.metadata_editor(
+            document.getElementById("metadata_editor"),
+            "{{ paste.url }}",
+            JSON.parse(document.getElementById("metadata").innerHTML),
+        );
+    });
 </script>
 {% call super() %} {% endblock %}

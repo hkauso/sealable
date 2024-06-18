@@ -58,6 +58,19 @@
         <!-- page content -->
         <div id="_page" style="display: contents">
             <main class="min-h-full" {% block mainstuff %}{% endblock %}>
+                <noscript>
+                    <div class="mdnote note-error">
+                        <b class="mdnote-title">
+                            Please allow JavaScript to edit
+                        </b>
+                        <p>
+                            All editing functions require JavaScript access to
+                            be enabled. You can view pastes just fine without
+                            it.
+                        </p>
+                    </div>
+                </noscript>
+
                 <div id="_footer_base_page" class="h-full">
                     {% block content %}{% endblock %}
                 </div>
