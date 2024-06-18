@@ -464,6 +464,7 @@ dialog::backdrop {
 
 .cm-comment {
     @apply !text-red-800 dark:!text-red-200;
+    font-family: ui-monospace, monospace;
 }
 
 .cm-link {

@@ -1,6 +1,6 @@
-reg_ns("markdown", ["sealable"]).define(
+reg_ns("markdown", ["sealable", "bundled_env"]).define(
     "fix_markdown",
-    function (imports, root_id) {
+    function ({ sealable, bundled_env }, root_id) {
         const theme = document.querySelector(`#${root_id} theme`);
 
         if (theme !== null) {
@@ -11,7 +11,23 @@ reg_ns("markdown", ["sealable"]).define(
             }
 
             // update icon
-            imports.sealable.update_theme_icon();
+            sealable.update_theme_icon();
+        }
+
+        // get js
+        const bundled = document.querySelector("code.language-worker");
+
+        if (bundled !== null) {
+            if (bundled_env.workers && bundled_env.workers.length > 0) {
+                // make sure we don't leave the old workers running
+                for (worker of bundled_env.workers) {
+                    console.info("terminated old worker");
+                    worker.terminate();
+                }
+            }
+
+            bundled_env.enter_env(bundled.innerText);
+            bundled.remove();
         }
     },
     ["string"],

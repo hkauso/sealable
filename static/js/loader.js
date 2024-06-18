@@ -37,7 +37,7 @@ globalThis.reg_ns = (ns, deps) => {
         _deps: deps || [],
         /// Pull dependencies (other namespaces) as listed in the given `deps` argument
         _get_deps: () => {
-            const self = globalThis.ns(ns);
+            const self = globalThis._sealable_base.ns_store[`$${ns}`];
             let deps = {};
 
             for (const dep of self._deps) {
@@ -51,6 +51,7 @@ globalThis.reg_ns = (ns, deps) => {
                 deps[dep] = res;
             }
 
+            deps.$ = self; // give access to self through $
             return deps;
         },
         /// Store the real versions of functions

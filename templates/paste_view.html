@@ -46,7 +46,9 @@
 
 <script>
     use("markdown", (markdown) => {
-        markdown.fix_markdown("tab_container");
+        use("bundled_env", (bundled_env) => {
+            markdown.fix_markdown("tab_container");
+        });
     });
 
     globalThis._sealable_base.secret = {

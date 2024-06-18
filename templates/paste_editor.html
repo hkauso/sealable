@@ -180,9 +180,5 @@ display: flex; flex-direction: column;"{% endblock %}{% block content %}
             editor.init_tabs();
         });
     });
-
-    use("visual", (visual) => {
-        visual.create_visual_editor(document.getElementById("preview_tab"));
-    });
 </script>
 {% call super() %} {% endblock %}
