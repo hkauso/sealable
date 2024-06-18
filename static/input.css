@@ -417,7 +417,7 @@ nav button.selected {
 }
 
 dialog {
-    @apply flex flex-col absolute bottom-0;
+    @apply flex flex-col absolute bottom-0 animate-fade-in;
     @apply backdrop-blur-lg bg-neutral-200/75 dark:bg-neutral-800/75;
     @apply m-auto fixed border-none text-current shadow-md;
     display: none;

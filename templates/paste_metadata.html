@@ -16,7 +16,7 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
     <!-- editor -->
     <form class="flex flex-col w-full" id="submit_form" style="flex: 1 0">
         <div
-            class="card flex flex-col gap-2"
+            class="card flex flex-col gap-2 animate-fade-in"
             style="flex: 1 0"
             id="metadata_editor"
         >
@@ -103,15 +103,14 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <!-- prettier-ignore -->
 <script type="application/json" id="metadata">{{ paste_metadata|safe }}</script>
 
-<script type="module">
-    import metadata_editor from "/static/js/metadata.js";
-
+<script src="/static/js/metadata.js"></script>
+<script>
     globalThis._sealable_base.secret = {
         type: "note-info",
         title: "Notice",
     };
 
-    metadata_editor(
+    ns("metadata").metadata_editor(
         document.getElementById("metadata_editor"),
         "{{ paste.url }}",
         JSON.parse(document.getElementById("metadata").innerHTML),
