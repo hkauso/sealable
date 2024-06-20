@@ -1870,9 +1870,9 @@ dependencies = [
 
 [[package]]
 name = "sauropod"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f016f4d98d0b906dbbbd785f761a8f96ca05ad693a7f3208e22ec0af67fef8ff"
+checksum = "fea6f563bc596ee47ebc76c5c0cb3f3078d97ca4bc2731ae9fdc0ee28dc5d2b8"
 dependencies = [
  "comrak",
  "regex",
@@ -1904,6 +1904,7 @@ dependencies = [
  "axum-macros",
  "dotenv",
  "pastemd",
+ "regex",
  "sauropod",
  "serde",
  "serde_json",

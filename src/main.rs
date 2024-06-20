@@ -3,6 +3,7 @@ use pastemd::{database::Database, routing::api, DatabaseOpts};
 use std::env;
 
 mod base;
+mod markdown;
 mod pages;
 
 #[tokio::main]

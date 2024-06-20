@@ -30,6 +30,33 @@ reg_ns("markdown", ["sealable", "bundled_env"]).define(
             bundled.remove();
         }
 
+        // handle modification blocks
+        for (const script of Array.from(
+            document.querySelectorAll(`#${root_id} script[type="env/mod"]`),
+        )) {
+            try {
+                const mods = JSON.parse(script.innerHTML);
+                let element = script.previousSibling;
+
+                // find something that isn't useless
+                // (anything but #text)
+                while (element.nodeName === "#text") {
+                    element = element.previousSibling;
+                }
+
+                // update attributes
+                for (const entry of Object.entries(mods)) {
+                    element.setAttribute(entry[0], entry[1]);
+                }
+
+                element.setAttribute("data-env-modified", "true");
+                script.remove();
+            } catch (err) {
+                console.error("MOD:", err);
+                continue;
+            }
+        }
+
         // escape all code blocks
         for (const block of Array.from(
             document.querySelectorAll("#tab\\:preview pre code"),

@@ -9,7 +9,7 @@ use axum_extra::extract::cookie::CookieJar;
 
 use tower_http::services::ServeDir;
 use pastemd::{database::Database, model::Paste};
-use sauropod::markdown::parse_markdown as shared_parse_markdown;
+use crate::markdown::parse_markdown;
 use serde::{Serialize, Deserialize};
 
 pub fn routes(database: Database) -> Router {
@@ -112,7 +112,7 @@ pub async fn view_paste_request(
             }
 
             // ...
-            let rendered = shared_parse_markdown(p.content.clone(), Vec::new());
+            let rendered = parse_markdown(p.content.clone());
             Html(
                 PasteViewTemplate {
                     paste: p.clone(),
@@ -320,5 +320,5 @@ pub struct RenderMarkdown {
 
 /// Render markdown body
 async fn render_markdown(Json(req): Json<RenderMarkdown>) -> Result<String, ()> {
-    Ok(shared_parse_markdown(req.content.clone(), Vec::new()))
+    Ok(parse_markdown(req.content.clone()))
 }
