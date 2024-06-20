@@ -497,5 +497,5 @@ dialog::backdrop {
 }
 
 .hljs-comment {
-    @apply opacity-75;
+    @apply !text-black dark:!text-white opacity-75;
 }

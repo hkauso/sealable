@@ -20,6 +20,13 @@ reg_ns("bundled_env").define("enter_env", async ({ $ }, code) => {
         $.workers = [];
     }
 
+    // fill default worker.js url
+    if (worker_util_url === undefined) {
+        // at this point it doesn't really matter because this only happens
+        // on paste view anyways, so we don't really need a blob to cache
+        worker_util_url = `${window.location.origin}/static/js/worker.js`;
+    }
+    
     // create blob
     const blob_url = URL.createObjectURL(
         new Blob(
