@@ -470,7 +470,8 @@ dialog::backdrop {
 }
 
 .cm-comment,
-.hljs-keyword {
+.hljs-keyword,
+.hljs-name {
     @apply !text-red-800 dark:!text-red-200;
 }
 
@@ -490,7 +491,8 @@ dialog::backdrop {
 .cm-variable-3,
 .hljs-variable,
 .hljs-attr,
-.hljs-title {
+.hljs-title,
+.hljs-built_in {
     @apply !text-violet-800 dark:!text-violet-200;
 }
 

@@ -1,5 +1,17 @@
 //! Paste custom environment handler
-reg_ns("bundled_env").define("enter_env", ({ $ }, code) => {
+
+// load worker util
+let worker_util_url;
+const worker_util = fetch("/static/js/worker.js")
+    .then((r) => r.text())
+    .then((t) => {
+        worker_util_url = URL.createObjectURL(
+            new Blob([t], { type: "text/javascript" }),
+        );
+    });
+
+/// Spawn new worker task
+reg_ns("bundled_env").define("enter_env", async ({ $ }, code) => {
     if (!window.Worker) {
         return;
     }
@@ -8,52 +20,12 @@ reg_ns("bundled_env").define("enter_env", ({ $ }, code) => {
         $.workers = [];
     }
 
-    // translate code
-    // function calls that expect a result
-    const await_calls = [
-        ...code.matchAll(/\=\s*(?<NAME>.*?)\s*::\s*<\(\s*(?<ARGS>.*?)\s*\)>/gm),
-    ];
-
-    for (const call of await_calls) {
-        if (!call.groups) {
-            continue;
-        }
-
-        code = code.replace(
-            call[0],
-            `= await $(["${call.groups.NAME}", ${call.groups.ARGS}])`,
-        );
-    }
-
-    // regular calls
-    const regular_calls = [
-        ...code.matchAll(/(?<NAME>.*?)\s*::\s*<\(\s*(?<ARGS>.*?)\s*\)>/gm),
-    ];
-
-    for (const call of regular_calls) {
-        if (!call.groups) {
-            continue;
-        }
-
-        code = code.replace(
-            call[0],
-            `$(["${call.groups.NAME}", ${call.groups.ARGS}])`,
-        );
-    }
-
     // create blob
     const blob_url = URL.createObjectURL(
         new Blob(
             [
-                `const $ = (d) => {
-            self.postMessage(d);
-
-            return new Promise((resolve) => {
-                self.onmessage = (d) => {
-                    resolve(d.data);
-                }
-            });
-        }\n(async () => {\n${code}\n})();`,
+                `importScripts("${worker_util_url}");
+(async () => {\n${code}\n})();`,
             ],
             {
                 type: "text/javascript",
@@ -65,7 +37,7 @@ reg_ns("bundled_env").define("enter_env", ({ $ }, code) => {
     const worker = new Worker(blob_url);
     $.workers.push(worker);
 
-    worker.onmessage = (msg) => {
+    worker.onmessage = async (msg) => {
         // type check message (should be array calling global function)
         const { data } = msg;
 
@@ -81,20 +53,8 @@ reg_ns("bundled_env").define("enter_env", ({ $ }, code) => {
 
         if (
             ![
-                "ns",
-                "reg_ns",
-                "trigger",
-                "alert",
-                "confirm",
-                "prompt",
-                "spawn",
-                // colors
-                "swap_color",
-                "read_color",
-                // DOM
-                "create_element",
-                "update_element_property",
-                "update_element_attribute"
+                "serialize_ns", // will be used in the worker "require" function
+                "trigger", // needed to run namespace functions
             ].includes(func)
         ) {
             return console.error("WORKER: illegal function call");
@@ -109,10 +69,49 @@ reg_ns("bundled_env").define("enter_env", ({ $ }, code) => {
     };
 });
 
-/// Spawn new worker thread with `code`
-globalThis.spawn = (code) => {
-    globalThis.trigger("bundled_env:enter_env", [code]);
+/// Serialize a namespace into just a list of its functions
+globalThis.serialize_ns = (name) => {
+    return Object.keys(ns(name)._fn_store);
 };
+
+// extra namespaces
+
+// window
+const window_ = reg_ns("env/window");
+
+window_.define("alert", function (_, msg) {
+    return alert(msg);
+});
+
+window_.define("confirm", function (_, msg) {
+    return confirm(msg);
+});
+
+window_.define("prompt", function (_, msg) {
+    return prompt(msg);
+});
+
+// tasks
+const tasks = reg_ns("env/tasks");
+
+/// Spawn new worker thread with `code`
+tasks.define("spawn", function (_, code) {
+    globalThis.trigger("bundled_env:enter_env", [code]);
+    return null;
+});
+
+/// Alias of global [`trigger`]
+tasks.define(
+    "trigger",
+    function (_, id, args) {
+        globalThis.trigger(id, args);
+        return null;
+    },
+    ["string", "object"],
+);
+
+// color
+const color = reg_ns("env/color");
 
 /// Get the background color and text color of an element by query selector
 ///
@@ -121,7 +120,7 @@ globalThis.spawn = (code) => {
 ///
 /// ## Returns:
 /// * `[background color, text color]`
-globalThis.read_color = (selector) => {
+color.define("read_color", function (_, selector) {
     const element = document.querySelector(selector);
 
     if (!element) {
@@ -130,10 +129,10 @@ globalThis.read_color = (selector) => {
 
     const style = window.getComputedStyle(element);
     return [style["background-color"], style.color];
-};
+});
 
 /// Replace color in every content element on the page
-globalThis.swap_color = (source, replacement) => {
+color.define("swap_color", function (_, source, replacement) {
     // get source as css rgb
     const source_element = document.createElement("div");
     source_element.style.backgroundColor = source;
@@ -160,10 +159,15 @@ globalThis.swap_color = (source, replacement) => {
 
         continue;
     }
-};
+
+    return null;
+});
+
+// dom
+const dom = reg_ns("env/dom");
 
 /// Create element of type and return ID, appened to `append_to_selector`
-globalThis.create_element = (type, append_to_selector) => {
+dom.define("create_element", function (_, type, append_to_selector) {
     if (["script", "object", "embed", "iframe"].includes(type)) {
         console.error("WORKER: not allowed to create this element type");
         return undefined;
@@ -174,10 +178,10 @@ globalThis.create_element = (type, append_to_selector) => {
     element.id = id;
     document.querySelector(append_to_selector).appendChild(element);
     return id;
-};
+});
 
 /// Update en element's property given its `id`
-globalThis.update_element_property = (id, property, value) => {
+dom.define("update_element_property", function (_, id, property, value) {
     const element = document.getElementById(id);
 
     if (!element) {
@@ -186,10 +190,10 @@ globalThis.update_element_property = (id, property, value) => {
 
     element[property] = value;
     return true;
-};
+});
 
 /// Update en element's attribute given the element `id` and attribute `name`
-globalThis.update_element_attribute = (id, name, value) => {
+dom.define("update_element_attribute", function (_, id, name, value) {
     const element = document.getElementById(id);
 
     if (!element) {
@@ -198,4 +202,4 @@ globalThis.update_element_attribute = (id, name, value) => {
 
     element.setAttribute(name, value);
     return true;
-};
+});

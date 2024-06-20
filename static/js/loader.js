@@ -79,7 +79,8 @@ globalThis.reg_ns = (ns, deps) => {
                 }
 
                 // ...
-                self._fn_store[name](self._get_deps(), ...arguments); // call with deps and arguments
+                // we MUST return here, otherwise nothing will work in workers
+                return self._fn_store[name](self._get_deps(), ...arguments); // call with deps and arguments
             };
         },
     };
