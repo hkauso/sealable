@@ -70,11 +70,11 @@ flex-direction: column;"{% endblock %}{% block content %}
             ).json();
 
             if (res.success === false) {
-                globalThis._sealable_base.gen_secret(
+                trigger("sealable:gen_secret", [
                     "note-error",
                     "Error",
                     res.message,
-                );
+                ]);
             } else {
                 window.location.href = `/${res.payload[1].url}?SECRET=${res.payload[0]}`;
             }

@@ -39,6 +39,7 @@ async fn main() {
             } else {
                 pastemd::database::ViewMode::OpenMultiple
             },
+            document_store: false,
         },
     )
     .await;
