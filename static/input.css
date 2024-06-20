@@ -290,7 +290,7 @@ blockquote p {
 }
 
 pre {
-    @apply pl-2 border-l-4 border-red-800 dark:border-red-200;
+    @apply pl-2 border-l-4 border-red-800 dark:border-red-200 overflow-auto max-w-full;
 }
 
 code:not(pre code),
@@ -300,6 +300,12 @@ code:not(pre code),
     font-size: 13.5px;
     line-height: 1rem;
     max-width: 100%;
+}
+
+.hljs {
+    background: transparent !important;
+    color: inherit !important;
+    padding: 0 !important;
 }
 
 .mdnote {
@@ -458,12 +464,17 @@ dialog::backdrop {
 }
 
 .cm-variable-2,
-.cm-quote {
+.cm-quote,
+.hljs-string {
     @apply !text-lime-800 dark:!text-lime-200;
 }
 
-.cm-comment {
+.cm-comment,
+.hljs-keyword {
     @apply !text-red-800 dark:!text-red-200;
+}
+
+.cm-comment {
     font-family: ui-monospace, monospace;
 }
 
@@ -471,10 +482,18 @@ dialog::backdrop {
     @apply !text-blue-800 dark:!text-blue-300;
 }
 
-.cm-url {
+.cm-url,
+.hljs-property {
     @apply !text-blue-700 dark:!text-blue-200;
 }
 
-.cm-variable-3 {
+.cm-variable-3,
+.hljs-variable,
+.hljs-attr,
+.hljs-title {
     @apply !text-violet-800 dark:!text-violet-200;
+}
+
+.hljs-comment {
+    @apply opacity-75;
 }

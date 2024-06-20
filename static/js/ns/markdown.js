@@ -29,6 +29,18 @@ reg_ns("markdown", ["sealable", "bundled_env"]).define(
             bundled_env.enter_env(bundled.innerText);
             bundled.remove();
         }
+
+        // escape all code blocks
+        for (const block of Array.from(
+            document.querySelectorAll("#tab\\:preview pre code"),
+        )) {
+            block.innerHTML = block.innerHTML
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;");
+        }
+
+        // highlight
+        hljs.highlightAll();
     },
     ["string"],
 );
