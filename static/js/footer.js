@@ -38,10 +38,10 @@
         // we'll always use the value given in a query param over the page-set value
         const secret_type = search.get("SECRET_TYPE")
             ? search.get("SECRET_TYPE")
-            : globalThis._sealable_base.secret.type;
+            : globalThis._app_base.secret.type;
         const secret_title = search.get("SECRET_TITLE")
             ? search.get("SECRET_TITLE")
-            : globalThis._sealable_base.secret.title;
+            : globalThis._app_base.secret.title;
 
         // ...
         self.gen_secret(secret_type, secret_title, search.get("SECRET"));

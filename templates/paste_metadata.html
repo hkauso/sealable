@@ -2,7 +2,7 @@
 base.site_name }}{% endblock %} {% block mainstuff %}style="height: 100%;
 display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <script>
-    globalThis._sealable_base.auth_user = "{{ auth_user }}";
+    globalThis._app_base.auth_user = "{{ auth_user }}";
 </script>
 
 <div class="flex flex-col w-full h-full">
@@ -104,7 +104,7 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
 <script type="application/json" id="metadata">{{ paste_metadata|safe }}</script>
 
 <script>
-    globalThis._sealable_base.secret = {
+    globalThis._app_base.secret = {
         type: "note-info",
         title: "Notice",
     };

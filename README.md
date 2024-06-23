@@ -20,3 +20,19 @@ The following configuration options are required for all database types (besides
 * `DB_USER` - database username
 * `DB_PASS` - database password
 * `DB_NAME` - database name
+
+## Pongo
+
+It is recommended that you pull the Pongo source into a different directory, build the CSS, and then link it into `static/pongo`.
+
+```bash
+ln -s PATH_TO_PONGO/static static/pongo
+```
+
+Then you can set the `PO_STATIC_DIR` variable:
+
+```ini
+PO_STATIC_DIR="/static/pongo"
+```
+
+Pongo is needed for database management.

@@ -15,22 +15,9 @@ async fn main() {
         Err(_) => 8080,
     };
 
+    // init database
     let database = Database::new(
-        DatabaseOpts {
-            // dorsal expects "_type" and "host" to be Option but "env::var" gives Result...
-            // we just need to convert the result to an option
-            _type: match env::var("DB_TYPE") {
-                Ok(v) => Option::Some(v),
-                Err(_) => Option::None,
-            },
-            host: match env::var("DB_HOST") {
-                Ok(v) => Option::Some(v),
-                Err(_) => Option::None,
-            },
-            user: env::var("DB_USER").unwrap_or(String::new()),
-            pass: env::var("DB_PASS").unwrap_or(String::new()),
-            name: env::var("DB_NAME").unwrap_or(String::new()),
-        },
+        pongo::Database::env_options(),
         pastemd::database::ServerOptions {
             view_password: true,
             guppy: env::var("GUPPY_ROOT").is_ok(),
@@ -47,10 +34,20 @@ async fn main() {
 
     database.init().await;
 
+    let pongo_database = pongo::Database::new(
+        pongo::Database::env_options(),
+        pongo::ServerOptions::default(),
+    )
+    .await;
+
+    pongo_database.init().await;
+
+    // ...
     let app = Router::new()
         .route("/", get(pages::homepage))
         .merge(pages::routes(database.clone()))
         .nest("/api", api::routes(database.clone()))
+        .nest("/@pongo", pongo::dashboard::routes(pongo_database.clone()))
         .fallback(api::not_found);
 
     let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{port}"))

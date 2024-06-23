@@ -1678,6 +1678,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "pongo"
+version = "0.1.1"
+dependencies = [
+ "askama",
+ "askama_axum",
+ "axum",
+ "axum-extra",
+ "axum-macros",
+ "dorsal",
+ "dotenv",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tower-http",
+]
+
+[[package]]
 name = "powerfmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1904,6 +1921,7 @@ dependencies = [
  "axum-macros",
  "dotenv",
  "pastemd",
+ "pongo",
  "regex",
  "sauropod",
  "serde",
