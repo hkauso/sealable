@@ -1679,7 +1679,9 @@ dependencies = [
 
 [[package]]
 name = "pongo"
-version = "0.1.1"
+version = "0.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4a5f0537ea2310b5e4decd22840f5a97af0497961e0c70576b6715e53c959aee"
 dependencies = [
  "askama",
  "askama_axum",

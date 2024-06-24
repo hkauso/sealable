@@ -41,13 +41,14 @@ async fn main() {
     .await;
 
     pongo_database.init().await;
+    std::env::set_var("PO_NESTED", "a/pongo");
 
     // ...
     let app = Router::new()
         .route("/", get(pages::homepage))
         .merge(pages::routes(database.clone()))
         .nest("/api", api::routes(database.clone()))
-        .nest("/@pongo", pongo::dashboard::routes(pongo_database.clone()))
+        .nest("/a/pongo", pongo::dashboard::routes(pongo_database.clone()))
         .fallback(api::not_found);
 
     let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{port}"))
