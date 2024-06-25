@@ -185,6 +185,7 @@ display: flex; flex-direction: column;"{% endblock %}{% block content %}
         use("editor", (editor) => {
             editor.create_editor(document.getElementById("content").innerText);
             editor.init_tabs();
+            editor.check_url(document.getElementById("new_url"));
         });
     });
 </script>

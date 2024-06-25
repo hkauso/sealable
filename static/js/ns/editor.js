@@ -82,4 +82,38 @@
             }
         });
     });
+
+    // url check
+    self.define("check_url", function (_, bind_to) {
+        let stored_timeout = null;
+
+        bind_to.addEventListener("keyup", (event) => {
+            let value = event.target.value.trim();
+
+            // make sure value isn't too short
+            if (value.length < 1) {
+                bind_to.classList.remove("invalid");
+                return;
+            }
+
+            // create timeout
+            if (stored_timeout) {
+                clearTimeout(stored_timeout);
+            }
+
+            stored_timeout = setTimeout(async () => {
+                // fetch url
+                const exists = await (await fetch(`/api/${value}`)).ok;
+
+                if (!exists) {
+                    // paste does not exist
+                    bind_to.classList.remove("invalid");
+                    return;
+                }
+
+                // set input to invalid
+                bind_to.classList.add("invalid");
+            }, 500);
+        });
+    });
 })();

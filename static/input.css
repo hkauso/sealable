@@ -227,6 +227,11 @@ textarea,
 input,
 select {
     @apply focus:outline-none focus:ring-2 focus:ring-brand-low h-max w-full;
+    transition: box-shadow 0.15s;
+}
+
+input.invalid {
+    @apply !ring-2 !ring-red-800 dark:!ring-red-200;
 }
 
 input.small,
