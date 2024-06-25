@@ -1,5 +1,5 @@
 use axum::{routing::get, Router};
-use pastemd::{database::Database, routing::api, DatabaseOpts};
+use pastemd::{database::Database, routing::api};
 use std::env;
 
 mod base;

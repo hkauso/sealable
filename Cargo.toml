@@ -7,10 +7,10 @@ version = "0.1.5"
 edition = "2021"
 
 [features]
-postgres = ["pastemd/postgres", "pongo/sqlite"]
-mysql = ["pastemd/mysql", "pongo/sqlite"]
+postgres = ["pastemd/postgres", "pongo/postgres"]
+mysql = ["pastemd/mysql", "pongo/mysql"]
 sqlite = ["pastemd/sqlite", "pongo/sqlite"]
-# default = ["pastemd/sqlite", "pongo/sqlite"]
+default = ["pastemd/sqlite", "pongo/sqlite"]
 
 [dependencies]
 axum = "0.7.5"
