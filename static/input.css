@@ -183,7 +183,7 @@ hr {
 }
 
 img {
-    @apply max-w-full align-middle;
+    @apply max-w-full align-middle inline;
 }
 
 /* input */

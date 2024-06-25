@@ -664,9 +664,9 @@ dependencies = [
 
 [[package]]
 name = "dorsal"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "14e65b4426e9341d6a1646bba2409b17baba8e9c965ea5970c95846ebc66349f"
+checksum = "b1860cd20eb6f4c282bbec8f06c17e07f82c1c602f690b581270489b9682e14d"
 dependencies = [
  "hex_fmt",
  "redis",
@@ -1573,9 +1573,9 @@ checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "pastemd"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf46de95fbc1f318abc8753c0cc5e6cdcdb81c1d9c57bb08983ef7e91c125f0d"
+checksum = "42780b075a89eedcfc72328dec3884c484b1a4068874c65206148e40b3a3464e"
 dependencies = [
  "axum",
  "axum-extra",
