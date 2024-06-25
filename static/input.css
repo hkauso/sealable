@@ -92,6 +92,23 @@ a.button.red {
 }
 
 /* typography */
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+strong,
+em,
+b,
+i,
+[role] {
+    @apply break-words max-w-full;
+}
+
 a:not(.flush):not(.button),
 a code,
 a strong,
