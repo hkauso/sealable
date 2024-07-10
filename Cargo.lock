@@ -1573,9 +1573,7 @@ checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "pastemd"
-version = "0.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42780b075a89eedcfc72328dec3884c484b1a4068874c65206148e40b3a3464e"
+version = "0.5.0"
 dependencies = [
  "axum",
  "axum-extra",

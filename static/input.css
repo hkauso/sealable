@@ -106,7 +106,7 @@ em,
 b,
 i,
 [role] {
-    @apply break-words max-w-full;
+    @apply break-words max-w-full break-keep;
 }
 
 a:not(.flush):not(.button),

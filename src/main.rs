@@ -27,7 +27,15 @@ async fn main() {
             } else {
                 pastemd::database::ViewMode::OpenMultiple
             },
-            document_store: false,
+            table_pastes: pastemd::database::PastesTableConfig {
+                table_name: "se_pastes".to_string(),
+                prefix: "se_paste".to_string(),
+                ..Default::default()
+            },
+            table_views: pastemd::database::ViewsTableConfig {
+                table_name: "se_views".to_string(),
+                prefix: "se_views".to_string(),
+            },
         },
     )
     .await;
