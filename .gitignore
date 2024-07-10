@@ -3,4 +3,4 @@
 static/style.css
 static/favicon.svg
 .env
-static/pongo/
+static/pongo
