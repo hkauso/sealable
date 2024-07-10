@@ -1574,6 +1574,8 @@ checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 [[package]]
 name = "pastemd"
 version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "143a84507ff7b36685a719f892e338ea9dac2e87e7dce00dbcfb0c050d0b0ff0"
 dependencies = [
  "axum",
  "axum-extra",
@@ -1912,7 +1914,7 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
 name = "sealable"
-version = "0.1.5"
+version = "0.2.0"
 dependencies = [
  "askama",
  "askama_axum",
