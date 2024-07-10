@@ -23,7 +23,7 @@ dotenv = "0.15.0"
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 # pastemd = { path = "../pastemd", default-features = false }
-pastemd = { version = "0.5.1", default-features = false }
+pastemd = { version = "0.5.2", default-features = false }
 sauropod = "0.1.2"
 axum-extra = { version = "0.9.3", features = ["cookie"] }
 regex = "1.10.5"
