@@ -26,16 +26,11 @@
             </span>
 
             <!-- prettier-ignore -->
-            {% if !base.guppy_root.is_empty() && !paste.metadata.owner.is_empty() %}
+            {% if base.starstraw && !paste.metadata.owner.is_empty() %}
             <span>
                 Owner:
-                <a
-                    href="{{ base.guppy_root }}/{{ paste.metadata.owner }}"
-                    target="_blank"
-                >
-                    <!-- TODO: show owner nickname -->
-                    {{ paste.metadata.owner }}
-                </a>
+                <!-- TODO: show owner skills if possible -->
+                <b>{{ paste.metadata.owner }}</b>
             </span>
             {% endif %}
 

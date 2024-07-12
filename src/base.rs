@@ -9,8 +9,8 @@ pub struct BaseStore {
     pub info_url: String,
     /// `BODY_EMBED` variable, HTML that is embedded on every page
     pub body_embed: String,
-    /// `GUPPY_ROOT` variable, for guppy auth (disabled if not provided)
-    pub guppy_root: String,
+    /// `USE_STARSTRAW` variable, for starstraw auth (disabled if not provided)
+    pub starstraw: bool,
     /// `SECRET` variable, "true" makes the footer not link to the source
     pub secret: bool,
 }
@@ -30,9 +30,9 @@ impl BaseStore {
                 Ok(s) => s,
                 Err(_) => String::new(),
             },
-            guppy_root: match env::var("GUPPY_ROOT") {
-                Ok(s) => s,
-                Err(_) => String::new(),
+            starstraw: match env::var("USE_STARSTRAW") {
+                Ok(s) => s == "true",
+                Err(_) => false,
             },
             secret: match env::var("SECRET") {
                 Ok(s) => s == "true",

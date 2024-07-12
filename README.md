@@ -9,7 +9,7 @@ Sealable supports the following configuration options through environment variab
 * `SITE_NAME` - the name of the site
 * `INFO_URL` - the url (relative to root `/`) that will be served from the "what" link in the footer
   * Link is not shown in the footer if this variable is not set
-* `GUPPY_ROOT` - the root url of a [Guppy](https://github.com/stellularorg/guppy) server
+* `USE_STARSTRAW` - if [starstraw](https://github.com/hkauso/starstraw) authentication should be enabled
   * User authentication is completely disabled if this is not provided
   * When provided, views switch from [`OpenMultiple`](https://docs.rs/pastemd/latest/pastemd/database/enum.ViewMode.html#variant.OpenMultiple), to [`AuthenticatedOnce`](https://docs.rs/pastemd/latest/pastemd/database/enum.ViewMode.html#variant.AuthenticatedOnce)
 

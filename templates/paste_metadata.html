@@ -21,7 +21,7 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
             id="metadata_editor"
         >
             <!-- auth form -->
-            {% if base.guppy_root.is_empty() == false %}
+            {% if base.starstraw == true %}
             <div
                 class="card secondary round flex justify-between items-center gap-2"
             >
@@ -31,7 +31,7 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
                 <!-- actions -->
                 <div class="flex gap-2">
                     <a
-                        href="{{ base.guppy_root }}/flow/auth/login"
+                        href="/star/spirit/login"
                         data-wants-redirect="true"
                         class="button round !text-sky-800 dark:!text-sky-300"
                     >
@@ -39,7 +39,7 @@ display: flex; flex-direction: column;"{% endblock %} {% block content %}
                     </a>
 
                     <a
-                        href="{{ base.guppy_root }}/flow/auth/register"
+                        href="/star/spirit/register"
                         data-wants-redirect="true"
                         class="button round !text-sky-800 dark:!text-sky-300"
                     >

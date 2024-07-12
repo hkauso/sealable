@@ -20,9 +20,9 @@ async fn main() {
         pongo::Database::env_options(),
         pastemd::database::ServerOptions {
             view_password: true,
-            guppy: env::var("GUPPY_ROOT").is_ok(),
+            starstraw: env::var("USE_STARSTRAW").is_ok(),
             paste_ownership: true,
-            view_mode: if env::var("GUPPY_ROOT").is_ok() {
+            view_mode: if env::var("USE_STARSTRAW").is_ok() {
                 pastemd::database::ViewMode::AuthenticatedOnce
             } else {
                 pastemd::database::ViewMode::OpenMultiple
@@ -50,12 +50,22 @@ async fn main() {
 
     pongo_database.init().await;
     std::env::set_var("PO_NESTED", "a/pongo");
+    std::env::set_var("PO_STARSTRAW", "/star");
+
+    let starstraw_database = starstraw::Database::new(
+        starstraw::Database::env_options(),
+        starstraw::ServerOptions::default(),
+    )
+    .await;
+
+    starstraw_database.init().await;
 
     // ...
     let app = Router::new()
         .route("/", get(pages::homepage))
         .merge(pages::routes(database.clone()))
         .nest("/api", api::routes(database.clone()))
+        .nest("/star", pongo::starstraw::routes(starstraw_database))
         .nest("/a/pongo", pongo::dashboard::routes(pongo_database.clone()))
         .fallback(api::not_found);
 

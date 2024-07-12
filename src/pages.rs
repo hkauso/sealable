@@ -21,6 +21,9 @@ pub fn routes(database: Database) -> Router {
         // serve static dir
         .nest_service("/static", get_service(ServeDir::new("./static")))
         // ...
+        .route("/api/auth/callback", get(starstraw::api::callback_request))
+        .route("/api/auth/logout", get(starstraw::api::logout_request))
+        // ...
         .with_state(database)
 }
 
@@ -72,7 +75,7 @@ pub async fn view_paste_request(
             let auth_user = match jar.get("__Secure-Token") {
                 Some(c) => match database
                     .auth
-                    .get_user_by_unhashed(c.value_trimmed().to_string())
+                    .get_profile_by_unhashed(c.value_trimmed().to_string())
                     .await
                 {
                     Ok(ua) => Some(ua),
@@ -179,10 +182,10 @@ pub async fn editor_request(
     let auth_user = match jar.get("__Secure-Token") {
         Some(c) => match database
             .auth
-            .get_user_by_unhashed(c.value_trimmed().to_string())
+            .get_profile_by_unhashed(c.value_trimmed().to_string())
             .await
         {
-            Ok(ua) => ua.user.username,
+            Ok(ua) => ua.username,
             Err(_) => String::new(),
         },
         None => String::new(),
@@ -249,10 +252,10 @@ pub async fn config_editor_request(
     let auth_user = match jar.get("__Secure-Token") {
         Some(c) => match database
             .auth
-            .get_user_by_unhashed(c.value_trimmed().to_string())
+            .get_profile_by_unhashed(c.value_trimmed().to_string())
             .await
         {
-            Ok(ua) => ua.user.username,
+            Ok(ua) => ua.username,
             Err(_) => String::new(),
         },
         None => String::new(),

@@ -3,14 +3,14 @@ name = "sealable"
 authors = ["hkau"]
 license = "MIT"
 
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [features]
-postgres = ["pastemd/postgres", "pongo/postgres"]
-mysql = ["pastemd/mysql", "pongo/mysql"]
-sqlite = ["pastemd/sqlite", "pongo/sqlite"]
-default = ["pastemd/sqlite", "pongo/sqlite"]
+postgres = ["pastemd/postgres", "pongo/postgres", "starstraw/postgres"]
+mysql = ["pastemd/mysql", "pongo/mysql", "starstraw/mysql"]
+sqlite = ["pastemd/sqlite", "pongo/sqlite", "starstraw/sqlite"]
+default = ["pastemd/sqlite", "pongo/sqlite", "starstraw/sqlite"]
 
 [dependencies]
 axum = "0.7.5"
@@ -23,9 +23,10 @@ dotenv = "0.15.0"
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 # pastemd = { path = "../pastemd", default-features = false }
-pastemd = { version = "0.5.2", default-features = false }
+pastemd = { version = "0.5.4", default-features = false }
 sauropod = "0.1.2"
 axum-extra = { version = "0.9.3", features = ["cookie"] }
 regex = "1.10.5"
 # pongo = { path = "../pongo", default-features = false }
-pongo = { version = "0.1.3", default-features = false }
+pongo = { version = "0.1.5", default-features = false }
+starstraw = { version = "0.1.0", default-features = false }

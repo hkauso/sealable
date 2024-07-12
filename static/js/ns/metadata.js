@@ -17,7 +17,7 @@ reg_ns("metadata").define(
         // render
         for (const field of Object.entries(metadata)) {
             if (
-                globalThis._app_base.guppy_root === "" &&
+                globalThis._app_base.starstraw === false &&
                 field[0] === "owner"
             ) {
                 continue;
