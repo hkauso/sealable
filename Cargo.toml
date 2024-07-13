@@ -28,5 +28,5 @@ sauropod = "0.1.2"
 axum-extra = { version = "0.9.3", features = ["cookie"] }
 regex = "1.10.5"
 # pongo = { path = "../pongo", default-features = false }
-pongo = { version = "0.1.5", default-features = false }
+pongo = { version = "0.1.7", default-features = false }
 starstraw = { version = "0.1.0", default-features = false }

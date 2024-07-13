@@ -64,6 +64,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(pages::homepage))
         .merge(pages::routes(database.clone()))
+        .merge(pages::extra_starstraw_routes(starstraw_database.clone()))
         .nest("/api", api::routes(database.clone()))
         .nest("/star", pongo::starstraw::routes(starstraw_database))
         .nest("/a/pongo", pongo::dashboard::routes(pongo_database.clone()))

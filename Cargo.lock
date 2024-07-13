@@ -1681,9 +1681,9 @@ dependencies = [
 
 [[package]]
 name = "pongo"
-version = "0.1.5"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dbde49a03dd46560700ea61a15668b4cb9b38efa2724974f9569c9a42ae77b01"
+checksum = "4e48b334b394c409b7efa3a59bfc0b9853824732cd26557a212403d2ef871b9a"
 dependencies = [
  "askama",
  "askama_axum",
@@ -1917,7 +1917,7 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
 name = "sealable"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "askama",
  "askama_axum",

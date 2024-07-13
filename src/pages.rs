@@ -27,6 +27,12 @@ pub fn routes(database: Database) -> Router {
         .with_state(database)
 }
 
+pub fn extra_starstraw_routes(database: starstraw::Database) -> Router {
+    Router::new()
+        .route("/~:username", get(pongo::starstraw::spirit_view_request))
+        .with_state(database)
+}
+
 #[derive(Template)]
 #[template(path = "homepage.html")]
 struct HomepageTemplate {}

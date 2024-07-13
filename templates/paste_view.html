@@ -29,8 +29,9 @@
             {% if base.starstraw && !paste.metadata.owner.is_empty() %}
             <span>
                 Owner:
-                <!-- TODO: show owner skills if possible -->
-                <b>{{ paste.metadata.owner }}</b>
+                <a href="/~{{ paste.metadata.owner }}">
+                    {{ paste.metadata.owner }}
+                </a>
             </span>
             {% endif %}
 
