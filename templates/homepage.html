@@ -98,9 +98,22 @@ flex-direction: column;"{% endblock %}{% block content %}
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 
 <script>
+    // check mode
+    const search = new URLSearchParams(window.location.search);
+    const mode = search.get("mode");
+
+    // render
     use("markdown", (markdown) => {
         use("editor", (editor) => {
-            editor.create_editor("");
+            if (mode === "rune") {
+                use("rune", (rune) => {
+                    rune.render(document.getElementById("text_tab"), "");
+                });
+            } else {
+                editor.create_editor("");
+            }
+
+            // ...
             editor.init_tabs();
             editor.check_url(document.getElementById("url"));
         });
