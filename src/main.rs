@@ -10,6 +10,11 @@ mod pages;
 async fn main() {
     dotenv::dotenv().ok(); // load .env
 
+    let host: String = match env::var("HOST") {
+        Ok(s) => s,
+        Err(_) => String::from("localhost"),
+    };
+
     let port: u16 = match env::var("PORT") {
         Ok(v) => v.parse::<u16>().unwrap(),
         Err(_) => 8080,
@@ -70,10 +75,10 @@ async fn main() {
         .nest("/a/pongo", pongo::dashboard::routes(pongo_database.clone()))
         .fallback(api::not_found);
 
-    let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{port}"))
+    let listener = tokio::net::TcpListener::bind(format!("{host}:{port}"))
         .await
         .unwrap();
 
-    println!("Starting server at http://localhost:{port}!");
+    println!("Starting server at http://{host}:{port}");
     axum::serve(listener, app).await.unwrap();
 }
